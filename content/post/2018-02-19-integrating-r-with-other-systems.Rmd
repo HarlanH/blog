@@ -1,0 +1,22 @@
+---
+title: integrating R with other systems
+author: ''
+date: '2012-06-16'
+categories:
+  - professional
+tags:
+  - analytics
+  - conferences
+  - data science
+  - meetup
+  - programming
+  - R
+slug: integrating-r-with-other-systems
+---
+
+I just returned from the <a href="http://biostat.mc.vanderbilt.edu/wiki/Main/UseR-2012" target="_blank" rel="noopener">useR! 2012 </a>conference for developers and users of R. One of the common themes to many of the presentations was integration of R-based statistical systems with other systems, be they other programming languages, web systems, or enterprise data systems. Some highlights for me were an <a href="http://www.rforge.net/Rserve/news.html" target="_blank" rel="noopener">update to Rserve </a>that includes 1-stop web services, and a presentation on <a href="http://cran.r-project.org/web/packages/Rjms/index.html" target="_blank" rel="noopener">ESB integration</a>. Although I didn't see it discussed, the new <a href="http://cran.r-project.org/web/packages/httr/" target="_blank" rel="noopener">httr </a>package for easier access to web services is also another outstanding development in integrating R into large-scale systems.
+
+Coincidentally, I just a week or so ago had given a short presentation to the local R Meetup entitled "Annotating Enterprise Data from an R Server." The topic for the evening was <a href="http://www.meetup.com/R-users-DC/events/65472712/" target="_blank" rel="noopener">"R in the Enterprise," </a>and others talked about generating large, automated reports with knitr, and using RPy2 to integrate R into a Python-based web system. I talked about my experiences building and deploying a predictive system, using the corporate database as the common link. Here are the slides:
+
+<iframe src="https://docs.google.com/presentation/embed?id=1ZR98-fUn5TnaUL-zP0iSdBR9KdTT1eIADDP7B7bZLkk&amp;start=false&amp;loop=false&amp;delayms=3000" width="480" height="389" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+

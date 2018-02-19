@@ -1,0 +1,49 @@
+---
+title: Parameterizable Reproducible Research
+author: ''
+date: '2014-11-20'
+slug: parameterizable-reproducible-research
+categories:
+  - professional
+tags:
+  - advertising
+  - programming
+  - R
+  - reporting
+---
+
+
+
+<p><em>The below is a public version of a post originally posted on an internal blog at the <a href="http://eab.com" target="_blank">Education Advisory Board</a> (EAB), my current employer. We don’t yet have a public tech blog, but I got permission to edit and post it here, along with the referenced code. </em></p>
+Data Science teams get asked to do a lot of different sorts of things. Some of what the team that I’m part of builds is enterprise-scale predictive analytics, such as the Student Risk Model that’s part of the <a href="http://www.eab.com/technology/student-success-collaborative" target="_blank">Student Success Collaborative</a>. That’s basically software development with a statistical twist and machine-learning core. Sometimes we get asked to do quick-and-dirty, one-off sorts of things, to answer a research question. We have a variety of tools and processes for that task. But there’s a third category that I want to focus on – frequently requested but slightly-different reports.
+<h2 id="ParameterizableReproducibleResearch-whatisit">
+what is it
+</h2>
+<p>There’s a relatively new theme in the scientific research community called <em><a class="external-link" style="color: #3b73af;" href="http://reproducibleresearch.net/" rel="nofollow">reproducible research</a></em>. Briefly, the idea is that it should be possible to re-do all steps after data collection automatically, including data cleaning and reformatting, statistical analyses, and even the actual generation of a camera-ready report with charts, graphs, and tables. This means that if you realized that, say, one data point in your analysis was bogus and needed to be removed, you could remove that data point, press a button, and in a minute or two have a shiny new PDF with all of the results automatically updated.</p>
+<p>This type of reproducible research has been around for a while, although it’s having a recent resurgence in part due to the so-called “<a href="http://www.americanscientist.org/issues/feature/the-statistical-crisis-in-science/1" target="_blank">statistical crisis</a>”. The <a href="http://www.r-project.org/" target="_blank">R</a> (and S) statistical programming languages have supported <a class="external-link" style="color: #3b73af;" href="http://www.latex-project.org/" rel="nofollow">LaTeX</a>, the scientific document creation/typesetting tool, for many years. Using a tool called <a class="external-link" style="color: #3b73af;" href="https://www.stat.uni-muenchen.de/~leisch/Sweave/" rel="nofollow">Sweave</a>, a researcher “weaves” chunks of text and chunks of R code together. The document is then “executed”, where the R code chunks are executed and the results are converted into a single LaTeX document, which is then compiled into a PDF or similar. The code can generate charts and tables, so no manual effort is needed to rebuild a camera-ready document.</p>
+<p>This is great, a huge step forward towards validation of often tricky and complex statistical analyses. If you’re writing a conference paper on, say, a biomedical experiment, a reproducible process can drastically improve your ability to be confident in your work. But data scientists often have to generate this sort of thing repeatedly, from different sources of data or with different parameters. And they have to do so efficiently.</p>
+<p><em>Parameterizable reproducible research</em>, then, is a variant of reproducible research tools and workflows where it is easy to specify data sources, options, and parameters to a standardized analytical report, even one that includes statistical or predictive analyses, data manipulation, and graph generation. The report can be emailed or otherwise sent to people, and doesn’t seem as public as, say, a web-based app developed in <a href="http://shiny.rstudio.com/" target="_blank">Shiny</a> or another technology. This isn’t a huge breakthrough or anything, but it’s a useful pattern that seems worth sharing.</p>
+<!--more-->
+<h2 id="ParameterizableReproducibleResearch-whydoit">
+why do it
+</h2>
+<p>Our current best example of this structure is a report we generate that goes into per-customer technical details about their customized statistical model. It compares the version of the model in production with several “toy” models, along with a lot of explanation and education. The process of generating the report includes pulling data from remote servers, running statistical analyses, computing various metrics on the statistical models, then interleaving standard text, parameterized text (e.g., the name of the customer), and the results of computation, as well as auto-generated charts and graphs.</p>
+<p>To do this process manually would require following a 10 to 20-step checklist, would require a substantial amount of effort – at least 30 minutes per report – and would be error-prone.</p>
+<p>Our team now generates these reports in about 3 minutes per member, based on a simple configuration file. Here’s what a configuration file might look like:</p>
+<pre class="r"><code>user = &quot;hharris&quot;
+data_source = &quot;SOURCENAMEHERE&quot;
+data_location = &quot;where in the source to pull data from&quot;
+cust_id = &quot;9999&quot;
+cust_name = &quot;State College&quot;</code></pre>
+<p>That’s it. And here’s the command that generates the report:</p>
+<pre class="r"><code>./risk-model-report.R --verbose --config myconfig.R</code></pre>
+<p>That’s it! The result is a standalone HTML file customized for that specific customer, ready to be sent.</p>
+Should you use this pattern? If you use R to create reports, you should definitely be using <a href="https://github.com/rstudio/rmarkdown" target="_blank">Rmarkdown</a>. If you have to generate these reports repeatedly, with subtle variations each time, you should strongly consider this framework or an equivalent!
+<h2 id="ParameterizableReproducibleResearch-howwedoit">
+how we do it
+</h2>
+<p>We use a relatively straightforward pattern available in the R programming language. As mentioned above, the standard reproducible research workflow is to create one document per analysis. We wrap that document in a separate script which is responsible for reading and validating a configuration file, then building the parameterized document with the appropriate configuration variables. The build process is multi-step under the hood, but most of the heavy lifting is performed by the <a class="external-link" style="color: #3b73af;" href="http://rmarkdown.rstudio.com/" rel="nofollow">Rmarkdown</a> package, which runs <a class="external-link" style="color: #3b73af;" href="http://johnmacfarlane.net/pandoc/" rel="nofollow">Pandoc</a>, a cross-platform system for converting document formats.</p>
+<p>For an example, see <a href="/post/param-repro-rsch-Red.html">this HTML document</a> (it should work in any web browser). Note that the image is embedded, meaning that the HTML document stands alone. It’s relatively easy to generate other formats, such as PDF or even Word, instead.</p>
+<p>The document was generated by R and Rmarkdown <a href="https://github.com/advisory/param-repro-rsch" target="_blank">code we’ve released into the public domain</a>, hosted on Github. If this pattern is useful to you, please make use of and adapt it!</p>
+<p>Note that since the generated code is HTML, you can add arbitrary Javascript and markup to your generated reports. We’ve used collapsible areas of a page to expose technical details to only interested readers, added MathJax for mathematical expressions, and even added Javascript libraries to send us data about how many times the document is viewed and whether outgoing links were followed.</p>
+<p>Over time, we expect to use variants of this pattern to standardize a variety of reports, internally-facing as well as customer-facing. If you do something similar, or better, I’d love to hear about it!</p>

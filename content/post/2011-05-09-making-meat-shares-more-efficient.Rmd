@@ -1,0 +1,40 @@
+---
+title: making meat shares more efficient
+author: ''
+date: '2011-05-09'
+slug: making-meat-shares-more-efficient
+categories:
+  - personal
+  - professional
+tags:
+  - analytics
+  - csa
+  - food
+  - operations research
+---
+
+A personal interest I have is the ethical and sustainable production of food. I've been a <a title="Prairieland CSA" href="http://www.prairielandcsa.org/" target="_blank" rel="noopener">member of</a> and <a title="Hellgate CSA" href="http://hellgatecsa.net/" target="_blank" rel="noopener">helped run</a> <a title="Just Food on CSAs" href="http://www.justfood.org/csa" target="_blank" rel="noopener">Community Supported Agriculture</a> groups, and my wife and I currently purchase the majority of our meat from a <a title="Lewis Waite Farm CSA" href="http://www.csalewiswaitefarm.com/" target="_blank" rel="noopener">group of upstate NY pastured-livestock producers</a> who sell their products through CSAs. It's an ala-carte business model, where I place an order on a website, and the next week I pick up the frozen products cut and packaged as if for retail.
+
+A related way to get meat has become fairly popular recently -- the meat CSA or meat share. As the <a href="http://www.meatshare.com/" target="_blank" rel="noopener">NYC Meatshare</a> group describes it, "Looking for healthy meat raised on pasture by small local farms? It's expensive, but by banding together to buy whole animals we can support farmers and save money." Members of a meatshare all pitch in to buy a whole animal, which is then butchered and split among the members. Here's how a meatshare event described the 10th of a hog each member got: "Each person will get an equal amount of bacon and sausage (about 2 lbs each), chops (center &amp; butt), and will divide the other cuts up as equally as possible (including ham steak, loin, organs, etc.) If you have preferences please let me know, I will do my best to accommodate. Or, you can swap with other members at my place."
+
+These two business models put a substantial burden on either the farmer (in the first case) or the consumer (in the second case). The retail model requires the farmer, or a collective of farmers, to put together a retail-ordering web site, a butchery and inventory system, and a delivery and distribution system. The meat share model takes these burdens off the farmers, but requires the consumers to set up and organize the purchase and payment system, meet at a common location, and either take what is available or perform ad hoc swaps. In a more traditional producer-consumer relationship, the supply chain, payment, inventory, and preferences-matching process is taken care of by the comodification of the animals (all cows are the same) and the services provided by a retail grocery store.
+
+One could argue that that's the third option -- Whole Foods -- but it sorta defeats the purpose of non-commidified, high-quality meat, and it tends to defeat the pocketbook too. No connection with the farm, just a promise of ethical standards (probably including the pointless "organic" label), and a substantial cut by middlemen. Not really an option at all.
+
+<div style= "float:right;position: relative;">
+![](/post/meatshare-300x222.jpg)
+</div>
+So what else could be done to build sustainable relationships between animal producers and people who value high-quality, ethically produced meat? Why not leverage technology? 
+And not just selling via web sites, but the kind of logistics technology that allows Whole Foods (and <a href="http://www.youtube.com/watch?v=mRAHa_Po0Kg" target="_blank" rel="noopener">UPS</a>, and Walmart) to efficiently get huge varieties of goods from place to place? A group at a recent <a href="http://foodhack.eventbrite.com/" target="_blank" rel="noopener">food-tech hack-a-thon</a> had the start of this idea. They put together<a href="http://groupme.at/" target="_blank" rel="noopener"> a quick demo of a front-end web site</a> ("groupme.at" -- clever!) that would allow consumers to choose smaller sets of cuts in such a way that the whole neatly ends up with a whole animal. By setting up a platform that can be easily connected with many small producers all over the country, the problem of every producer needing to be a webmaster is eliminated. And the system to get all of the pieces to add up to whole animals reduces risk for the farmer. It's a great start. But by leveraging additional open-source tools and some ingenuity, I think it should be possible to do even more.
+
+Imagine a similar web site, but instead of selecting a pre-selected package of cuts, you instead indicate your preferences and price range. As animals become available, you get an emailed notification of a delivery with a set of products that are very similar to the preferences you specified. You might love pork belly and boneless loin. Your neighbor might love cured pork belly (bacon) and chops. You might hate liver, but you'd accept some pig ears every once in a while for your dog. And your neighbor might really like the fatback to render for lard, while you'd find that useless. Everyone who might be sharing in an animal indicates their preferences, and the web site would automatically give everyone as much as possible of what they like the most. Equally important, all of the parts add up to whole animals, so the farmer is not stuck with the risk of unsold inventory.
+
+Now imagine that after a few months, you've ranked the cuts of meat from Alice's Farm 5 stars, but the ones from Bob's Ranch only 3 stars. And you've told the system that you're willing to pay more to get more of what you really want, but you neighbor tells the web site that he's willing to make trade-offs to spend less money. You've essentially added other constraints, that if balanced well, will make everyone as happy as possible. Also, notice that I mentioned both boneless loin and pork chops? They're more-or-less the same part of the animal cut different ways, so you can't sell them both off the same half of the same animal. Now you have exclusive constraints to add into the mix. Maybe everyone's better off if you get the boneless loin, or maybe everyone's better off if your neighbor gets the chops. It's easy to imagine collecting all of this information, but how do you combine it all and optimize the outcome in a <a href="http://en.wikipedia.org/wiki/Utilitarianism" target="_blank" rel="noopener">utilitarian</a> way?
+
+Why, operations research and computational optimization! Write some software that plugs everyone's constraints into a set of equations, push a button, let the computer think for a second or two, and wham, you get a solution that balances the constraints as fairly as possible! Send the cut list to the slaughterhouse and email the product lists and bills to the customers, and you're basically done.
+
+In the past, this sort of supply-chain optimization required massive computing power and complex software design. But now, there are <a href="http://www.coin-or.org/" target="_blank" rel="noopener">open-source code bases</a> for solving this sort of problem, at least at the scale needed to balance the preferences of a few farmers and a few dozen or hundred customers at a time.
+
+This is the next step in leveraging technology to make at least some aspects of the supply chain for small-scale meat operations as efficient as what Purdue does, but maintaining the high quality and personal connection to the farm that many people want now. All that's needed are some enterprising hackers to write the code and set up a scalable, configurable web platform for preference-based meatshares.
+
+In my <a href="http://www.harlan.harris.name/2011/05/optimizing-meat-shares-details/">next post</a>, I'll demonstrate how to write code that uses one of those open-source optimization libraries to solve a small version of this problem. If you're interested in reading R code, stay tuned!

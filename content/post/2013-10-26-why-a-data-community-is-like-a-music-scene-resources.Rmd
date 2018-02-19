@@ -1,0 +1,36 @@
+---
+title: Why a Data Community is Like a Music Scene -- Resources
+author: ''
+date: '2013-10-26'
+slug: why-a-data-community-is-like-a-music-scene-resources
+categories:
+  - professional
+tags:
+  - conferences
+  - data science
+---
+
+On Monday, October 28th, 2013, I gave a 5-minute Ignite talk entitled "Why a Data Community is Like a Music Scene" at an event associated with the Strata conference. Here's the video:
+
+<iframe src="//www.youtube.com/embed/fYtq3GbVrPM" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+
+And here are the acknowledgements and references for the talk:
+
+<a href="http://www.datacommunitydc.org" target="_blank" rel="noopener">Data Community DC</a>
+
+<a href="http://www.amazon.com/How-Music-Works-David-Byrne/dp/1938073533" target="_blank" rel="noopener">How Music Works</a>, by David Byrne
+
+<a href="https://docs.google.com/presentation/d/1iTh_8ud177Utzpk2Xr8mYONANbEB-lE-TfHWDdPw_sk/pub?start=false&amp;loop=false&amp;delayms=15000" target="_blank" rel="noopener">my slides for the Ignite talk</a>
+
+<a href="http://datacommunitydc.org/blog/2013/09/data-community-music-scene/" target="_blank" rel="noopener">my blog post (written first)</a>
+
+Photos:
+
+ * CBGB's exterior: <a title="NYC - East Village: CBGB &amp; OMFUG by wallyg, on Flickr" href="http://www.flickr.com/photos/wallyg/164546664/">NYC - East Village: CBGB &amp; OMFUG by wallyg, on Flickr</a> (<a href="http://creativecommons.org/licenses/by-nc-nd/2.0/" target="_blank" rel="noopener">Creative Commons</a>)
+ * Grafitti wall: <a title="cbgb, september 2006 (#1) by joe holmes, on Flickr" href="http://www.flickr.com/photos/joeholmes/349031368/">cbgb, september 2006 (#1) by joe holmes, on Flickr</a> (<a href="http://creativecommons.org/licenses/by-nc-nd/2.0/" target="_blank" rel="noopener">Creative Commons</a>)
+ * Joan Jett with beer: <a href="http://www.cherrybombed.com/2013/03/yearly-required-st-patricks-day-post-rock-stars-drinking-beer/joan-jett-of-the-runaways-backstage-at-the-whiskey-a-go-go/">1977 Los Angeles, CA-Joan Jett of the Runaways backstage at The Whiskey A Go Go. (Photos by Brad Elterman/BuzzFoto.com)</a>
+ * CSN: <a href="http://legendsrevealed.com/entertainment/2012/08/04/was-a-crosby-stills-and-nash-song-written-on-a-dare-from-a-limo-driver-on-the-way-to-the-airport/">legendsrevealed.com</a>
+ * Flats to Let: <a href="http://www.skyscrapercity.com/showthread.php?t=402544&amp;page=13">skyscrapercity.com</a>
+ * Dressing room: <a title="CBGBS Dresssing Room by Chris Infidel, on Flickr" href="http://www.flickr.com/photos/52443040@N00/62928798/">CBGBS Dresssing Room by Chris Infidel, on Flickr</a>
+ * Snog: <a title="_MG_1977.jpg by dinoboy, on Flickr" href="http://www.flickr.com/photos/dinoboy/645947968/">_MG_1977.jpg by dinoboy, on Flickr</a>
+

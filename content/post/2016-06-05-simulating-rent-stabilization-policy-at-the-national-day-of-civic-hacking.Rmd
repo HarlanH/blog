@@ -1,0 +1,46 @@
+---
+title: Simulating Rent Stabilization Policy at the National Day of Civic Hacking
+author: ''
+date: '2016-06-05'
+categories:
+  - professional
+tags:
+  - R
+  - Shiny
+  - housing
+  - civic hacking
+  - open data
+  - hackathon
+  - Washington DC
+slug: simulating-rent-stabilization-policy-at-the-national-day-of-civic-hacking
+---
+
+_[This post was originally published on Medium](https://medium.com/@HarlanH/simulating-rent-stabilization-policy-at-the-national-day-of-civic-hacking-4f44b808387c)_
+
+Yesterday was the 2016 National Day of Civic Hacking, a Code for America event that encourages people with technology and related skills to explore projects related to civil society and government. My friend Josh Tauberer wrote a thoughtful post earlier about the event called Why We Hack —on what the value of this sort of event might be — please read it.
+
+For my part, this year I worked on one of the projects he discusses, understanding the impact of DC’s rent stabilization laws and what potential policy changes might yield. As Josh noted, we discovered that it’s a hard problem. Much of the most relevant data (such as the list of properties under rent stabilization and their current and historical rents) are not available, and have to be estimated. Getting to a realistic understanding of the impact of law and policy on rents seems incredibly valuable, but hard.
+
+So I spun off [the main group](https://hackpad.com/Rent-Stabilization-Policy-Change-Impact-uLQIb7gQCYZ), and worked on an easier but much less ambitious project that could potentially be useful in just an afternoon’s work. Instead of trying to understand the law’s effect on actual DC rents, I built a little tool to understand the law’s effect on a rather unrealistic set of simulated apartment buildings. Importantly, I did this fully aware that I’m [not building with](http://www.buildwith.org/), I’m tinkering; my goal was to do something fun and interesting that might lead to something substantial and usable later, probably by someone else.
+
+![](/post/rentstabscreenshot.png)*Screen cap of my hackathon app.*
+
+Also importantly, the statistician [George Box](https://en.wikiquote.org/wiki/George_E._P._Box) famously said that “all [models](https://en.wikiquote.org/wiki/Scientific_modelling) are wrong, but some are useful.” My hope was that, for people interested in the effects of policy on stabilized rents, being able to explore the impact on a small, toy domain might allow them to understand the complex interactions of the law and the world more cleanly. Scientists do this sort of thing all the time — they use models to clarify issues, even when they don’t intent to fully simulate the complexity of the real world.
+
+So what does the little app do? It simulates the effects of three key set-in-law numbers on a fixed set of apartments over time. To make things easy, the apartments are in three different sizes of building (5-unit, 25-unit, and 200-unit), each unit is identical, and each unit starts identically at $1000/month. (In DC? Hah!) The important numbers are (1) the baseline inflation rate and annual rent increase rate, usually a few percent, (2) the usual amount rent can go up on turnover, currently 10%, and (3) the maximum rent can go up on turnover to keep units within the same building at similar rents, currently 30%.
+
+The second and third numbers are tricky and important. Consider a building where, if one unit happens to turn over frequently, its rent could go up 10% every year or two, compared to a unit with a longstanding tenant increasing only a little. After 5 or 10 years, the two identical units could have dramatically different rents. The law allows the rent on the second unit, when it turns over, to be increased more than 10%, to match the similar unit. This increase is capped, however, at 30%.
+
+The rents the city ends up with over time depend on these numbers, as well as on the frequency with which tenants leave and units turn over, and the mix of small/medium/large housing stock.
+
+Just thinking about the interactions among all of these issues is hard enough. Thinking about them in a more realistic situation, with judicial exceptions, changes in the law and the set of stabilized buildings, second-order changes in the housing market and both renters’ and property owners’ behavior, variations among neighborhoods, and variations in initial and historical rent, although fascinating, seems implausibly difficult to include, at least for now.
+
+The model itself is a [microsimulation ](https://en.wikipedia.org/wiki/Microsimulation)model. I literally pretend that each unit exists, and simulate the process of tenants leaving and rents changing over a period of years. (Computers are fast — the simulation takes just a fraction of a second.) I implemented it in a framework that makes it easy to deploy to the web and to interactive change the parameters and assumptions of the model, including the three critical policy knobs mentioned above, as well as assumptions about the world that strongly affect the outcome, such as housing stock mix and the distribution of tenant turnover rate.
+
+[**Try it out**](https://harlanh.shinyapps.io/rent-stabilization-policy-viz/). There are three buttons near the upper-right that let you simulate policies of a lower bump due to vacancies and a lower cap on big changes to normalize rents within a building. Both policies have similar effects, modestly lowering rents, but substantially decreasing the variance of rents.
+
+There’s much more to do to make this actually useful for policy experts or policy makers (pull requests happily accepted!), but even as-is, I think it nicely illustrates the value that formal models make in our ability to understand complex problems.
+
+In this case, it seems like if the goal is to reduce the uncertainty and variance among similar rents, then two useful directions might be to reduce the 10% and 30% bumps on vacancy, while slightly increasing the baseline rent increase. Of course, this will prioritize interests of new renters over existing ones, which might or might not be what you want to do. Other policies might differentially affect renters in smaller or larger buildings, or might incentivize better or worse behavior by landlords. Tools like this can help policy-makers develop intuitions and make good decisions.
+
+*Thanks to [Josh Tauberer](https://medium.com/@joshuatauberer) for comments on a draft of this post, and for organizing this topic and helpful resources; and [Justin Grimes](https://medium.com/@justgrimes) for helpful UX feedback as well as co-organizing C4DC and the NDoCH event.*

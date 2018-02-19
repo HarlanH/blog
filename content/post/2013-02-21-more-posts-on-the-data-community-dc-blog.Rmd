@@ -1,0 +1,28 @@
+---
+title: More posts on the Data Community DC blog
+author: ''
+date: '2013-02-21'
+slug: more-posts-on-the-data-community-dc-blog
+categories:
+  - professional
+tags:
+  - data science
+  - meta
+---
+
+For those people (or, more likely, 0 or 1 persons) who follow this blog to catch up on my professional thoughts: I've been doing a little bit of writing on the Data Community DC blog. Here are all my posts over there: <a href="http://datacommunitydc.org/blog/author/harlan/" target="_blank" rel="noopener">http://datacommunitydc.org/blog/author/harlan/</a> I'd definitely encourage you to read everyone else's work on the DC2 blog too!
+
+Two titles of my own:
+
+* <a title="Permalink to Examining Overlapping Meetup Memberships with Venn Diagrams" href="http://datacommunitydc.org/blog/2013/02/examining-overlapping-meetup-memberships-with-venn-diagrams/" rel="bookmark">Examining Overlapping Meetup Memberships with Venn Diagrams</a>
+* <a title="Permalink to Hackathons and DataDives" href="http://datacommunitydc.org/blog/2013/01/hackathons-and-datadives/" rel="bookmark">Hackathons and DataDives</a>
+
+And three  of others':
+
+* <a title="Permalink to Big Data Meta Review – The Evolution of Big Data as Told by Google" href="http://datacommunitydc.org/blog/2013/02/big-data-meta-review-the-evolution-of-big-data-as-told-by-google/" rel="bookmark">Big Data Meta Review – The Evolution of Big Data as Told by Google</a>
+* <a title="Permalink to Better Science of Viral Marketing : Part 1" href="http://datacommunitydc.org/blog/2013/01/better-science-of-viral-marketing/" rel="bookmark">Better Science of Viral Marketing</a>
+* <a title="Permalink to Getting Started with Recommendation Systems" href="http://datacommunitydc.org/blog/2013/01/getting-started-with-recommendation-systems/" rel="bookmark">Getting Started with Recommendation Systems</a>
+
+There are also weekly round-up posts on data topics generally, and on data visualization specifically, as well as event previews and reviews, etc.
+
+&nbsp;

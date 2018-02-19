@@ -1,0 +1,34 @@
+---
+title: On .name and third-level domains
+author: ''
+date: '2013-05-15'
+slug: on-name-and-third-level-domains
+categories:
+  - personal
+tags:
+  - internet
+  - meta
+---
+
+And, we're back! After being off-line for several weeks, this site is now live again! I can't imagine you missed it.
+
+Here's what happened. Let's start at the beginning. In 2003, ICANN added <code>.name</code> to the list of top-level domains (like <code>.com</code>, <code>.edu</code>, etc.). The idea is that individuals would use it for personal sites and email addresses. You can still do this, but (in case you haven't noticed), it's not very popular, and most domain name registrars don't even sell <code>.name</code> addresses.
+
+I purchased <code>harlan.harris.name</code> in 2003. Unlike <code>.com</code> addresses, you don't generally buy second-level domains in <code>.name</code>, you buy third-level domains. (<code>.name</code> is the top-level domain, <code>harris.name</code> is the second-level domain, which you can't buy, and <code>harlan.harris.name</code> is the third-level domain.) A cool feature is that if you buy <code>a.b.name</code>, you can get the email address <code>a@b.name</code>, not something like <code>me@a.b.name</code> (although you can set that up too). So my email address has been <code>harlan@harris.name</code> for ten years.
+
+Fast forward to April, 2013. I notice that my personal web site (where you are now) has been replaced by a generic sales screen. You know, with a bunch of random keywords, a stock photo, and "<span style="color: #ff0000;">buy this domain!</span>" in big red print. Not good. At first I thought that my Wordpress site (which hosts this blog) had gotten hacked, but no such luck. It turns out to be a convoluted mess of broken technology and confused customer support reps. The fortunate thing is that I don't use this site extensively, and the problem with the web forwarding didn't seem to affect my email address forwarding, so I didn't lose any email.
+
+The simplified version of what happened is that the company I bought the domain from in 2003, PersonalNames, merged with a company called Dotster a year or two ago. They presumably merged their technical systems together, which makes sense. But they for some reason failed to properly set up a system for third-level <code>.name</code> domain administration. And so my account failed to get properly transferred into their systems, and they stopped sending me notices about problems.
+
+Although I still technically owned <code>harlan.harris.name</code>, I could no longer log in and administer it, and the redirection to this web site (at another company, HostGator) was reset at some point for still-unknown reasons.
+
+It took a week and a dozen email messages and several hours on the phone for Dotster to figure out that yes, they owned this domain, but no, they didn't have the technical chops to administer it.
+
+I then set up an account with another company, eNom (nom, nom...), that does support third-level <code>.name</code> domains. Transferring the domain took another week and three attempts, due to errors on both sides. Add 48 hours for DNS forwarding to propagate around the Internet, and I'm finally back online yesterday!
+
+
+
+
+Except that although my email forwarding still works, I don't yet have control over that, because Dotster seemingly neglected to transfer email forwarding rights at the same time as the rest of the domain. So if you need me tomorrow, I'll be back on the phone with tech support.
+
+![](/post/sadrain.gif)

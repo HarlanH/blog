@@ -1,0 +1,43 @@
+---
+title: Conference Blogging INFORMS Analytics 2017
+author: ''
+date: '2017-04-09'
+categories:
+  - professional
+tags:
+  - data science
+  - conferences
+  - analytics
+  - operations research
+slug: conference-blogging-informs-analytics-2017
+---
+
+_[This post was originally published on Medium](https://medium.com/@HarlanH/conference-blogging-informs-analytics-2017-93ea788f46b7)_
+
+A particularly good way to get a little more out of professional conferences is to blog about your experiences, I think. It makes you focus your thoughts on things like “what’s the big take-away here,” and “what should I be asking people in the hallways?” Rather than just summarizing what you saw, or making snarky Twitter comments (also worth doing!), a great conference blog post is synthesis — combining insights from multiple presentations and conversations into a coherent new whole that helps clarify ideas.
+
+![](https://cdn-images-1.medium.com/max/2000/0*MwlSDRPPuXzmnPQJ.gif)
+
+I recently returned from the [INFORMS Analytics 2017](http://meetings2.informs.org/wordpress/analytics2017/) conference. INFORMS is the professional society of Operations Research — if the field is not familiar to you, think about a 1950s-style combination of industrial engineering, business, and theoretical computer science, focused on efficiency in big industrial and government problems. They have a big academic conference, but the Analytics conference is focused on business and practice, not theory. I like a bunch of aspects of OR’s culture, as a neighbor to data science, so I’ve attended a few times. In 2014 and this year, I was an “official” conference blogger, meaning that my posts were on [the official conference web site](http://meetings2.informs.org/wordpress/analytics2017/blog/), and my name badge had a fancy “Blogger” ribbon on it. I’m not sure if I managed to synthesize any big new ideas this year, but it was a fun, valuable, and recommended experience.
+
+Here are links and pull quotes from the four posts I wrote. Click through to read them in their entirely, if you’d like!
+
+## [OPERATIONS RESEARCH, FROM THE POINT OF VIEW OF DATA SCIENCE (REDUX)](http://meetings2.informs.org/wordpress/analytics2017/2017/04/02/operations-research-from-the-point-of-view-of-data-science-redux/)
+
+> …the value of OR’s participation in the broader analytics community is, I would argue, to bring decades of maturity to the table, and help focus people and organizations on the bottom line — results that matter.
+
+## [EXPECTED UTILITY AND PRIVATE ISLANDS: HOW TO GAMBLE](http://meetings2.informs.org/wordpress/analytics2017/2017/04/03/expected-utility-and-private-islands-how-to-gamble/)
+
+> The [Megabucks machine has odds of 1 in 49,836,032](https://wizardofodds.com/games/slots/megabucks/), and you could win $10 million. Clearly, the expected value is garbage, but still, you *could *win enough to ditch this conference and buy a (small) island. So that’s what I recommend you do. If you do win, you’re taking me to dinner at [Nobu](https://www.caesars.com/caesars-palace/restaurants/nobu).
+
+## [GUEST POST: PROBLEM DEFINITION AND WORKFLOWS IN ANALYTICS SUCCESS](http://meetings2.informs.org/wordpress/analytics2017/2017/04/04/guest-post-problem-definition-and-workflows-in-analytics-success/)
+
+> *This is a guest post by Michael Zargham, who gave a sadly under-attended but content-rich talk this morning. I thought his framing was spot on around how to set up an analytics group to repeatedly and efficiently explore potential new “well-defined, solvable, impactful” problems, determine what should be built, do the research to actually get the problem solved, and deliver it in the best possible way to get the desired results.*
+
+## [“WHAT SHOULD I DO,” REALLY…](http://meetings2.informs.org/wordpress/analytics2017/2017/04/04/what-should-i-do-really/)
+
+> Here’s the situation you don’t want to be in: I tell you to bring an umbrella a couple of days in a row. But it didn’t rain. You start to question your trust in me. You say, “hey, why’d you tell me to bring an umbrella?” I shrug. You lose your trust in me and stop listening to my guidance.
+
+And finally, since the conference was in Las Vegas, here’s a photo of my new socks:
+
+![](https://cdn-images-1.medium.com/max/2000/1*s8PTLDuwkR7Hi66LghcVxg.jpeg)

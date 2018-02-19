@@ -1,0 +1,30 @@
+---
+title: Apple TV and cross-device user-interface integration
+author: ''
+date: '2011-11-06'
+slug: apple-tv-and-cross-device-user-interface-integration
+categories:
+  - personal
+tags:
+  - gadgets
+  - smartphones
+  - technology
+  - televisions
+  - ui integration
+---
+
+On <a href="http://5by5.tv/buildanalyze/49" target="_blank" rel="noopener">last week's Build and Analyze</a> -- a great podcast nominally about iOS development, but actually more about just living a tech-geek lifestyle -- Marco talked a lot about the rumored "Apple TV" and whether it could actually be a groundbreaking product. He concluded that it probably couldn't. Most people wouldn't dump a working TV just for an Apple brand; the touch-screen interface that Apple has been using for the iPad and iPhone wouldn't work for a TV; the only apps that would work well on a TV would be just ways of getting better content (I note that Roku apps are laughable, with the exception of Angry Birds); getting access to better content than other competitors is probably impossible, even for Apple.
+
+For these reasons and more, Marco suggested that there's little that Apple, or anyone else, could do to substantially improve the TV experience, with the exception of better menu design.
+
+I think there's a way that Apple (or someone) could integrate modern technology into a TV that would be actually compelling, though. And in some ways it's the same way that I<a title="Smartphones, MP3 players, and Bluetooth: the division of labor" href="http://www.harlan.harris.name/2010/03/smartphones-mp3-players-and-bluetooth-the-division-of-labor/" target="_blank" rel="noopener"> earlier blogged about for MP3 players</a>. <em>Cross-device user-interfaces</em>. Here's how it might work for a television:
+
+<!--more-->Imagine a shiny Apple-branded TV. It's got a power cord, an Ethernet jack, and audio out jacks, full stop. The TV has a built-in Wi-Fi hub (AirPort), so you don't need another one.
+
+It doesn't have a dedicated remote control, but instead it uses your iPhone or iPod Touch or iPad. (Read all this as "Google TV" and "Android phone", if you prefer.) And it's the best remote control you've ever seen. Wi-fi fast and no need to point it at your screen. It has natural, context-dependent, easy-to-use controls, making use of multitouch and other gestures. A TV can have an amazing touch interface if you're holding one of the screens!
+
+And content will be almost magically flexible. Got a movie on your iPhone you were watching on the subway? It streams wirelessly to your TV when you get home. Watching a movie on TV but have to move to the other room? Now it's streaming to your tablet. Watching something with multiple views, like sports? Picture-in-picture is so '90s, it's two screens now. In fact, you can easily switch any content from one screen to another, or use one device for audio and one for video of the same content.
+
+Your TV doesn't feel like a separate appliance anymore, it's an extension of your handheld device, with both connected to the cloud. Apps can make use of both screens (and both CPUs), separating controls from content, or primary from secondary displays in games, or any number of other things.
+
+Imagine how much simpler and less frustrating this experience could be! Somebody make this happen!

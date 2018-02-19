@@ -1,0 +1,54 @@
+---
+title: What do Data Scientists mean by “Scaling”?
+author: ''
+date: '2017-06-09'
+categories:
+  - professional
+tags:
+  - machine learning
+  - data science
+  - scaling
+  - software architecture
+slug: what-do-data-scientists-mean-by-scaling
+---
+
+
+
+<p><em><a href="https://medium.com/@HarlanH/what-do-data-scientists-mean-by-scaling-49e89c954d4">This post was originally published on Medium</a></em></p>
+<p>Occasionally when chatting with other data scientists, especially with others who are interested in integrating predictive models into production software system, the word “scaling” comes up.</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*n0gZKfjQ4SPOYJFOHMo1UA.jpeg" alt="Not this. Although some West Coast data scientists are into this kind of scaling too." /><em>Not this. Although some West Coast data scientists are into this kind of scaling too.</em></p>
+<p>I think this is a great question, but it’s a little underspecified. There seem to be at least three qualitatively different notions of “scaling” in data science, and it’s worth the effort to clarify each of them, and address how people tackle them.</p>
+<p>Specifically, I think the real questions that underlie “scaling” are: “what happens when you have a lot more training data?”, “what happens when you have to make a lot more predictions?”, and “what happens when you have to fit a lot more models?”</p>
+<div id="scaling-the-training-data" class="section level2">
+<h2>Scaling the Training Data</h2>
+<p>How does your system perform if you have massive amounts of training data? Can you fit a model if you have a petabyte of log files? What if the files are on a thousand separate machines — can you learn in parallel?</p>
+<p>These are some of the classic scaling questions that arose from the rise of web-scale data, and of storing every action from every user on a Hadoop cluster. In some ways, this isn’t a very interesting question. For many practical problems, the best thing to do is to sample the data down to a reasonable size and use an off-the-shelf learner. The additional percentage point of performance may not be worth your time to pursue, even allowing for the adage that <a href="https://research.googleblog.com/2009/03/unreasonable-effectiveness-of-data.html">more data beats better algorithms</a>.</p>
+<p>There are important exceptions, of course. If you’re trying to learn to classify images, you probably do need all of Google’s data. Much of the immense progress made in recent years in image and video analysis, and text and speech processing, is indeed due to having vastly more labeled training data than was available 15 years ago.</p>
+<p>When you do need all of the data, machine learning algorithms such as Stochastic Gradient Descent <a href="http://papers.nips.cc/paper/4390-hogwild-a-lock-free-approach-to-parallelizing-stochastic-gradient-descent">parallelize</a>well. You can also do clever tricks such as split up your learning problem into a slow part and a fast part, and only do the slow part occasionally — <a href="https://dl.acm.org/citation.cfm?id=2648589">Facebook does this</a> with ad click models, using expensive random forest models occasionally to find critical feature combinations, but linear regression nightly to optimize against current data.</p>
+<p>And it’s usually worthwhile to parallelize operations such as cross-validation and hyperparameter selection, even when the data is not that large.</p>
+<div id="scaling-the-feature-space" class="section level3">
+<h3>Scaling the Feature Space</h3>
+<p>A related subissue is the impact of scaling the number of relevant or irrelevant features (columns, predictors). Penalized models such as LASSO regression have allowed biostatisticians working with DNA sequence data to build <a href="https://academic.oup.com/bioinformatics/article/21/20/3811/203554/Detection-of-DNA-copy-number-alterations-using">statistical models</a> with thousands or millions of potential predictors, but perhaps only hundreds or thousands of rows of data. These algorithms scale well with the feature space, while other algorithms fail to learn at all.</p>
+<p>My PhD thesis was in this area — I was studying how online linear learners (regression-like algorithms without a memory, learning from a stream of data) perform when the number of <em>irrelevant </em>attributes increases. Standard algorithms required a linear increase in the number of examples as the number of irrelevant attributes grew, but a class of learners that I <a href="https://link.springer.com/chapter/10.1007/3-540-36755-1_12">studied</a> and expanded was able to to learn the same functions with a sub-linear number of examples. Don’t worry if you haven’t heard about this line of research — it’s not that useful in practice!</p>
+</div>
+</div>
+<div id="scaling-the-scoring-process" class="section level2">
+<h2>Scaling the Scoring Process</h2>
+<p>Although it may be a problem if your model takes a week to fit, in practice you might be able to live with that, as long as the model can make predictions quickly. Some models, such as k-Nearest Neighbor or large SVMs, can take a long time to make a prediction, as they have to compare each item to some or all of the training data. On the other hand, classical techniques like regression and decision trees are very fast to score.</p>
+<p>Neural networks, including deep learning networks, can be slow to score, as they have to pass an image or other piece of data through perhaps millions of computations. Fortunately, the same GPUs that have dramatically sped up neural network fitting work well to speed up the prediction step as well, allowing Google and others to offer real-time translation and face detection to the entire world.</p>
+<p>A class of models that presents some scoring scaling challenges are those that underlie recommender systems, such as those that suggest Amazon items for you, or rank LinkedIn’s news feed. As these systems are typically getting new items and users on a continuous basis, collaborative filtering algorithms such as matrix factorization are problematic, as retraining can take a substantial amount of time. The research community has found <a href="https://dl.acm.org/citation.cfm?id=2365968">techniques</a> for keeping collaborative filters up to date efficiently, allowing those systems to be used at scale. YouTube and other systems use a <a href="https://dl.acm.org/citation.cfm?id=2959190">two-stage process</a>, with a quick but imprecise process funneling millions of items down to hundreds, followed by a more expensive process to rank the results.</p>
+<p>It’s also worth noting that scoring from predictive models is an intrinsically embarassingly parallelizable process. If you need to score 1000 items in a tenth of a second, and it takes a hundredth of a second to score, then just spin up 100 computers, each with a copy of your model.</p>
+</div>
+<div id="scaling-the-fitting-process" class="section level2">
+<h2>Scaling the Fitting Process</h2>
+<p>Finally, there is an operational aspect to scaling data science work. Suppose you need to fit many related models, but still need data scientist supervision. We had this constraint at <a href="https://www.eab.com/">EAB</a>, where each customer got a separately-fit version of a model template, with customizations based on their data and its unique aspects. The scaling problem, then, is not just how long it takes to fit a model, but how long it takes to review the data, to review model metrics, to identify opportunities for improvement and perform model selection, to push the model into production and validate it.</p>
+{{% tweet "805036734786469888" %}}
+<p>These sorts of scaling issues are related to <em>Data Scientist time</em>, not CPU time or wall clock time. The use of good, customized support tools can allow a data scientist to perform each step efficiently, using their time effectively to make highly skilled decisions, not perform repetitive or error-prone work. I talked about some of the <a href="https://www.dropbox.com/s/gknc8yc8nmurs7k/ShinyConf-Harris.pdf?dl=0">tools we built</a> for ourselves to do these tasks at the Shiny conference in 2016.</p>
+<p>The folks at Facebook commented on related issues recently in their announcement of <a href="https://research.fb.com/prophet-forecasting-at-scale/">Prophet</a>, their open-source time series forecasting system. &gt; The typical considerations that “scale” implies, computation and storage, aren’t as much of a concern for forecasting. We have found the computational and infrastructure problems of forecasting a large number of time series to be relatively straightforward — typically these fitting procedures parallelize quite easily and forecasts are not difficult to store in relational databases such as MySQL or data warehouses such as Hive. &gt; The problems of scale we have observed in practice involve the complexity introduced by the variety of forecasting problems and building trust in a large number of forecasts once they have been produced. Prophet has been a key piece to improving Facebook’s ability to create a large number of trustworthy forecasts used for decision-making and even in product features.</p>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>When starting a new data science project that will turn into a production system — something with a <a href="https://en.wikipedia.org/wiki/Systems_development_life_cycle">systems development life cycle</a>, it’s worth your time to think ahead about the scaling challenges you’ll face. If you have huge data, figure out whether you need to use all of it, or if you can sample down to something tractable and still get adequate results. If you will need to make predictions or recommendations in real-time, or in fractions of a second, you may want to choose algorithms that don’t require extensive processing in the scoring phase. And if you’re going to be doing the same process repeatedly, broaden the scope of what you’re considering the problem, and sketch out plans for automation.</p>
+<p>As data scientists, we’re responsible for building impactful statistical systems. Getting ahead of scaling issues is part of the challenge, and being clear about which aspects of scaling you have to address for a particular system will make your job easier.</p>
+<p><em>Thanks to Brian Eoff for helpful suggestions.</em></p>
+</div>

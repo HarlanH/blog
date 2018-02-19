@@ -1,0 +1,128 @@
+---
+title: making meat shares more efficient with R and Symphony
+author: ''
+date: '2011-05-09T01:01:01'
+slug: making-meat-shares-more-efficient-with-r-and-symphony
+categories:
+  - professional
+tags:
+  - analytics
+  - csa
+  - operations research
+  - programming
+  - R
+---
+
+
+
+<p>In my <a href="http://www.harlan.harris.name/2011/05/optimizing-meat-shares" target="_blank" rel="noopener">previous post</a>, I motivated a web application that would allow small-scale sustainable meat producers to sell directly to consumers using a meat share approach, using constrained optimization techniques to maximize utility for everyone involved. In this post, I’ll walk through some R code that I wrote to demonstrate the technique on a small scale.</p>
+<p>Although the problem is set up in R, the actual mathematical optimization is done by <a href="http://www.coin-or.org/SYMPHONY/" target="_blank" rel="noopener">Symphony</a>, an open-source mixed-integer solver that’s part of the <a href="http://www.coin-or.org/" target="_blank" rel="noopener">COIN-OR project</a>. (The problem of optimizing assignments, in this case of cuts of meat to people, is an integer planning problem, because the solution involves assigning either 0 or 1 of each cut to each person. More generally, linear programming and related optimization frameworks allow solving for real-numbered variables.) The RSymphony package allows problems set up in R to be solved by the C/C++ Symphony code with little hassle.</p>
+<p>My code is in a public github repository called <a href="https://github.com/HarlanH/groupmeat-demo/" target="_blank" rel="noopener">groupmeat-demo</a>, and the demo code discussed here is in the <a href="https://github.com/HarlanH/groupmeat-demo/blob/master/subset_test.R" target="_blank" rel="noopener">subset_test.R</a> file. (The other stuff in the repo is an unfinished version of a larger-scale demo with slightly more realistic data.)</p>
+<p>For this toy problem, we want to optimally assign 6 items to 3 people, each of whom have a different utility (value) for each item. In this case, I’m ignoring any fixed utility, such as cost in dollars, but that could be added into the formulation. Additionally, assume that items #1 and #2 cannot both be assigned, as with pork loin and pork chops.</p>
+<p>This sort of problem is fairly simple to define mathematically. To set up the problem in code, I’ll need to create some matrices that are used in the computation. Briefly, the goal is to maximize an objective expression, <span class="math inline">\(\mathbf{c}^T\mathbf{x}\)</span>, where the <span class="math inline">\(\mathbf{x}\)</span> are variables that will be 0 or 1, indicating an assignment or non-assignment, and the <span class="math inline">\(\mathbf{c}\)</span> is a coefficient vector representing the utilities of assigning each item to each person. Here, there are 6 items for 3 people, so I’ll have a 6x3 matrix, flattened to an 18-vector. The goal will be to find 0’s and 1’s for <span class="math inline">\(\mathbf{x}\)</span> that maximize the whole expression.</p>
+<p>Here’s what the <span class="math inline">\(\mathbf{c}\)</span> matrix looks like:</p>
+<pre><code>pers1 pers2  pers3
+item1 0.467 0.221 0.2151
+item2 0.030 0.252 0.4979
+item3 0.019 0.033 0.0304
+item4 0.043 0.348 0.0158
+item5 0.414 0.050 0.0096
+item6 0.029 0.095 0.2311</code></pre>
+<p>It appears as if everyone like item1, but only person1 likes item5.</p>
+<p>Additionally, I need to define some constraints. For starters, it makes no sense to assign an item to more than one person. So, for each row of that matrix, the sum of the variables (not the utilities) must be 1, or maybe 0 (if that item is not assigned). I’ll create a constraint matrix, where each row contains 18 columns, and the pattern of 0’s and 1’s defines a row of the assignment matrix. Since there are 6 items, there are 6 rows (for now). Each row needs to be less than or equal to one (I’ll tell the solver to use integers only later), so I also define vectors of inequality symbols and right-hand-sides.</p>
+<pre class="r"><code># for each item/row, enforce that the sum of indicators for its assignment are &lt;= 1
+mat &lt;- laply(1:num.items, function(ii) { x &lt;- mat.0; x[ii, ] &lt;- 1; as.double(x) })
+dir &lt;- rep(&#39;&lt;=&#39;, num.items)
+rhs &lt;- rep(1, num.items)</code></pre>
+<p>To add the loin/chops constraint, I need to add another row, specifying that the sum of the indicators for <em>both </em>rows now must be 1 or less as well.</p>
+<pre class="r"><code># for rows 1 and 2, enforce that the sum of indicators for their assignments are &lt;= 1
+mat &lt;- rbind(mat, matrix(matrix(c(1, 1, rep(0, num.items-2)), nrow=num.items, ncol=num.pers), nrow=1))
+dir &lt;- c(dir, &#39;&lt;=&#39;)
+rhs &lt;- c(rhs, 1)</code></pre>
+<p>Here’s what those matrices and vectors look like:</p>
+<pre class="r"><code>&gt; mat
+     1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
+[1,] 1 0 0 0 0 0 1 0 0  0  0  0  1  0  0  0  0  0
+[2,] 0 1 0 0 0 0 0 1 0  0  0  0  0  1  0  0  0  0
+[3,] 0 0 1 0 0 0 0 0 1  0  0  0  0  0  1  0  0  0
+[4,] 0 0 0 1 0 0 0 0 0  1  0  0  0  0  0  1  0  0
+[5,] 0 0 0 0 1 0 0 0 0  0  1  0  0  0  0  0  1  0
+[6,] 0 0 0 0 0 1 0 0 0  0  0  1  0  0  0  0  0  1
+[7,] 1 1 0 0 0 0 1 1 0  0  0  0  1  1  0  0  0  0
+&gt; dir
+[1] &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &gt; rhs
+[1] 1 1 1 1 1 1 1</code></pre>
+<p>Finally, specify that the variables must be binary (0 or 1), and call SYMPHONY to solve the problem:</p>
+<pre class="r"><code># this is an IP problem, for now
+types &lt;- rep(&#39;B&#39;, num.items * num.pers)
+max &lt;- TRUE # maximizing utility
+
+soln &lt;- Rsymphony_solve_LP(obj, mat, dir, rhs, types=types, max=max)</code></pre>
+<p>And, with a bit of post-processing to recover matrices from vectors, here’s the result:</p>
+<pre class="r"><code>$solution
+ [1] 0 0 0 0 1 0 0 0 1 1 0 0 0 1 0 0 0 1
+
+$objval
+[1] 1.52
+
+$status
+TM_OPTIMAL_SOLUTION_FOUND
+                        0 
+
+Person #1 got Items 5 worth 0.41
+Person #2 got Items 3, 4 worth 0.38
+Person #3 got Items 2, 6 worth 0.73</code></pre>
+<p>So that’s great. It found an optimal solution worth more than 50% more than the expected value of a random assignment. But there’s a problem. There’s no guarantee that everyone gets anything, and in this case, person #3 gets almost twice as much utility as person #2. Unfair! We need to enforce an additional constraint, that the difference between the maximum utility that any one person gets and the minimum utility that any one person gets is not too high. This is sometimes called a parity constraint. Adding parity constraints is a little tricky, but the basic idea here is to add two more variables to the 18 I’ve already defined. These variables are positive real numbers, and they are forced by constraints to be the maximum and minimum total utilities per person. In the objective function, then, they are weighted so that their difference is not to big. So, that expression becomes: <span class="math inline">\(\mathbf{c}^T\mathbf{x} - \lambda x_{19} - - \lambda x^{20}\)</span>. The first variable (the maximum utility of any person) is minimized, while the second variable is maximized. The <span class="math inline">\(\lambda\)</span> free parameter defines how much to trade off parity with total utility, and I’ll set it to 1 for now.</p>
+<p>For the existing rows of the constraint matrix, these new variables get 0’s. But two more rows need to be added, per person, to force their values to be no bigger/smaller (and thus the same as) the maximum/minimum of any person’s assigned utility.</p>
+<pre class="r"><code># now for those upper and lower variables
+# \forall p, \sum_i u_i x_{i,p} - d.upper \le 0
+# \forall p, \sum_i u_i x_{i,p} - d.lower \ge 0
+# so, two more rows per person
+d.constraint &lt;- function(iperson, ul) { # ul = 1 for upper, 0 for lower
+  x &lt;- mat.utility.0
+  x[, iperson ] &lt;- 1
+  x &lt;- x * obj.utility
+  c(as.double(x), (if (ul) c(-1,0) else c(0,-1)))
+}
+mat &lt;- rbind(mat, maply(expand.grid(iperson=1:num.pers, ul=c(1,0)), d.constraint, .expand=FALSE))
+dir &lt;- c(dir, c(rep(&#39;&lt;=&#39;, num.pers), rep(&#39;&gt;=&#39;, num.pers)))
+rhs &lt;- c(rhs, rep(0, num.pers*2))</code></pre>
+<p>The constraint inequalities then becomes as follows:</p>
+<pre class="r"><code>&gt; print(mat, digits=2)
+     1     2     3     4    5     6    7    8     9   10   11    12   13  14    15    16     17   18  19 20
+  1.00 0.000 0.000 0.000 0.00 0.000 1.00 0.00 0.000 0.00 0.00 0.000 1.00 0.0 0.000 0.000 0.0000 0.00  0  0
+  0.00 1.000 0.000 0.000 0.00 0.000 0.00 1.00 0.000 0.00 0.00 0.000 0.00 1.0 0.000 0.000 0.0000 0.00  0  0
+  0.00 0.000 1.000 0.000 0.00 0.000 0.00 0.00 1.000 0.00 0.00 0.000 0.00 0.0 1.000 0.000 0.0000 0.00  0  0
+  0.00 0.000 0.000 1.000 0.00 0.000 0.00 0.00 0.000 1.00 0.00 0.000 0.00 0.0 0.000 1.000 0.0000 0.00  0  0
+  0.00 0.000 0.000 0.000 1.00 0.000 0.00 0.00 0.000 0.00 1.00 0.000 0.00 0.0 0.000 0.000 1.0000 0.00  0  0
+  0.00 0.000 0.000 0.000 0.00 1.000 0.00 0.00 0.000 0.00 0.00 1.000 0.00 0.0 0.000 0.000 0.0000 1.00  0  0
+  1.00 1.000 0.000 0.000 0.00 0.000 1.00 1.00 0.000 0.00 0.00 0.000 1.00 1.0 0.000 0.000 0.0000 0.00  0  0
+  0.47 0.030 0.019 0.043 0.41 0.029 0.00 0.00 0.000 0.00 0.00 0.000 0.00 0.0 0.000 0.000 0.0000 0.00 -1  0
+  0.00 0.000 0.000 0.000 0.00 0.000 0.22 0.25 0.033 0.35 0.05 0.095 0.00 0.0 0.000 0.000 0.0000 0.00 -1  0
+  0.00 0.000 0.000 0.000 0.00 0.000 0.00 0.00 0.000 0.00 0.00 0.000 0.22 0.5 0.030 0.016 0.0096 0.23 -1  0
+  0.47 0.030 0.019 0.043 0.41 0.029 0.00 0.00 0.000 0.00 0.00 0.000 0.00 0.0 0.000 0.000 0.0000 0.00  0 -1
+  0.00 0.000 0.000 0.000 0.00 0.000 0.22 0.25 0.033 0.35 0.05 0.095 0.00 0.0 0.000 0.000 0.0000 0.00  0 -1
+  0.00 0.000 0.000 0.000 0.00 0.000 0.00 0.00 0.000 0.00 0.00 0.000 0.22 0.5 0.030 0.016 0.0096 0.23  0 -1
+&gt; dir
+ [1] &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &quot;&gt;=&quot; &quot;&lt;=&quot; &quot;&lt;=&quot; &gt; rhs
+ [1] 1 1 1 1 1 1 1 0 0 0 0 0 0</code></pre>
+<p>Looking at just the last row, this constraint says that the sum of the utilities of any assigned items for person #3, minus the lower limit, must be at least 0. That is essentially the definition of the lower limit, that that constraint holds true for all three people in this problem. Similar logic applies for the upper limit.</p>
+<p>Running the solver with this set of inputs gives the following:</p>
+<pre class="r"><code>$solution
+ [1] 0.000 0.000 1.000 0.000 1.000 0.000 0.000 0.000 0.000 1.000 0.000 1.000 0.000 1.000 0.000 0.000 0.000
+[18] 0.000 0.498 0.433
+
+$objval
+[1] 1.31
+
+$status
+TM_OPTIMAL_SOLUTION_FOUND
+                        0 
+
+Person #1 got Items 3, 5 worth 0.43
+Person #2 got Items 4, 6 worth 0.44
+Person #3 got Items 2 worth 0.50</code></pre>
+<p>The last two numbers in the solution are the values of the upper and lower bounds. Note that the objective value is only 41% higher than a random assignment, but the utilities assigned to each person are much closer. Dropping the <span class="math inline">\(\lambda\)</span> value to something closer to 0 causes the weights of the parity bounds to be less important, and the solution tends to be closer to the initial result.</p>
+<p>Scaling this up to include constraints in pricing, farm preferences, price vs. preference meta-preferences, etc., is not conceptually difficult, but would just entail careful programming. It is left as an exercise for the well-motivated reader!</p>
+<p>If you’ve made it this far, I’d definitely appreciate any feedback about this idea, corrections to my formulation or code or terminology, etc!</p>
+<p>(Thanks to Paul Ruben and others on <a href="http://www.or-exchange.com/" target="_blank" rel="noopener">OR-Exchange</a>, who helped me <a href="http://www.or-exchange.com/questions/2750/assignment-problem-maximizing-utility-equitably" target="_blank" rel="noopener">figure out how to think about the parity problem</a>, and to the authors of <a href="http://wordpress.org/extend/plugins/wp-codebox/" target="_blank" rel="noopener">WP-codebox</a> and <a href="http://wordpress.org/extend/plugins/wp-latex/" target="_blank" rel="noopener">WP LaTeX</a> for giving me tools to put nice scrollable R code and math in this post!)</p>

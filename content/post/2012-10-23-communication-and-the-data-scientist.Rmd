@@ -1,0 +1,18 @@
+---
+title: Communication and the Data Scientist
+author: ''
+date: '2012-10-23'
+slug: communication-and-the-data-scientist
+categories:
+  - professional
+tags:
+  - analytics
+  - conferences
+  - data science
+  - survey
+  - video
+---
+
+I recently gave a presentation on communication issues around the terms "Data Science" and "Data Scientist", based in part on a survey that I did with my Meetup colleagues Marck and Sean. The basic idea is that these new, extremely-broad buzzwords have resulted in confusion, which has impacted the ability of people with skills and people with data to meet and effectively communicate about who does what and what appropriate expectations should be. The survey was an attempt to bring some clarity to the issue of who are the people in this newly-reformulated community, and how do they view themselves and their skills. For more on the survey, see <a href="http://datacommunitydc.org/blog/2012/08/data-scientists-survey-results-teaser/" target="_blank">our post on the Data Community DC blog</a>. Here's the video of my presentation at <a href="http://datagotham.com" target="_blank">DataGotham</a>:
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/aMDe5pODkB0?list=PLokLecCHtd-9EnGjHRqgFIW0pm5P60rbL&amp;hl=en_US" frameborder="0" allowfullscreen></iframe>

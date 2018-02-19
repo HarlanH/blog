@@ -1,0 +1,30 @@
+---
+title: Bikeshare hills, incentives, and rewards
+author: ''
+date: '2013-06-23'
+slug: bikeshare-hills-incentives-and-rewards
+categories:
+  - personal
+tags:
+  - bikeshare
+  - marketing
+  - optimization
+---
+
+<a href="http://www.washingtonpost.com/wp-srv/artsandliving/magazine/features/2008/dc-1791-to-today/story.html"><img class=" " src="http://www.washingtonpost.com/wp-srv/artsandliving/magazine/features/2008/dc-1791-to-today/gr/art-map1.jpg" alt="" width="350" height="282" /></a> _A topographic map of Washington in 1791 by Don Alexander Hawkins. I live on the top edge of the map, on one of those hills._
+
+I'm a generally happy user of DC's <a href="http://www.capitalbikeshare.com/" target="_blank" rel="noopener">Capital Bikeshare</a> system -- just renewed my annual membership today in fact. But I don't use it as much as I'd like to, for one critical reason. I live on top of a hill. Riders are happy to take bikes from the neighborhood to their jobs downhill, but are much less likely to ride them uphill. As a result, the bike racks in my neighborhood are frequently completely empty by 8:00 or 8:30am, despite the many stores and businesses in the area. The only days I can reliably take a bike into work are when I leave at 7:15 for 8:00 meetings, which is thankfully not too often. On several occasions I have looked at the handy <a href="http://www.capitalbikeshare.com/stations" target="_blank" rel="noopener">real-time map</a> of bikeshare bikes, only to observe that there are no bikes available within a 15 minutes walk of my home!
+
+What should Bikeshare do to solve this problem? Well, they already do one thing, which is that they hire people to put bicycles in the back of a big van, then drive them up the hill to rebalance the system. This works, but it's expensive for the system, and it's not very timely or efficient. In other transportation problems, incentives are used to balance demand. For instance, airlines and Amtrak use pricing to incentivize people who are flexible in their schedule to take off-peak trips. But that won't work for Bikeshare, as most rides are free. (I pay $75/year, but all trips of 30 minutes or less are free. My rides are mostly 15-25 minutes long.) So people happily ride downhill to their downtown jobs in the mornings, but don't ride uphill to their reverse-commute jobs, and don't as often ride uphill in the evening home either. The end result is unhappy customers and excessive costs for the Bikeshare system.
+
+![](/post/ch_map.png)
+_Rough map of a possible incentive line for North-Central DC._
+
+So if you can't give people the usual financial incentives to drop off bikes in the Columbia Heights rack at 8am, what can you do to reduce the need for rebalancing and provide reasons for people to want to help solve Bikeshare's problem? I think the answer is swag. Imagine that there were lines on the Bikeshare map. Every time you crossed the line going in an uphill direction (reducing the need for rebalancing), you'd earn some points. If you earned enough points, you could redeem them for Bikeshare-branded, limited-edition swag. Imagine a t-shirt in official CaBi colors that said "I bike up hills", available only through this point system. Who wouldn't want that?
+
+It's easy for Bikeshare to figure this out, as they know exactly where you picked up each bike, and where you dropped it off. Determining whether you crossed a line, and thus biked uphill, is easy. And in addition to making people excited about biking up hills, you get them wearing branded items of clothing, which can only help market the system more broadly. They already sell swag through a <a href="http://www.cafepress.com/capitalbikeshare" target="_blank" rel="noopener">Cafepress shop</a>, so much of the infrastructure is in place. It's a win-win.
+
+Bikeshare people, if you read this and think it's a good idea, please run with it!
+
+![](/post/Screenshot-6_23_2013-3_08_23-PM-300x286.png) _What the swag might look like._
+

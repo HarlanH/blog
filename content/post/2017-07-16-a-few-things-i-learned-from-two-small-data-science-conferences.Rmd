@@ -1,0 +1,39 @@
+---
+title: A few things I learned from two small Data Science conferences
+author: ''
+date: '2017-07-16'
+categories:
+  - professional
+tags:
+  - data science
+  - machine learning
+  - conferences
+slug: a-few-things-i-learned-from-two-small-data-science-conferences
+---
+
+_[This post was originally published on Medium](https://medium.com/@HarlanH/a-few-things-i-learned-from-two-small-data-science-conferences-73bf6f01fad1)_
+
+
+I recently attended two small conferences — the [ISBIS (International Society for Business and Industrial Statistics) 2017 conference](http://www.isbis2017.org/), held at IBM Research in Westchester County, and the [Domino Data Lab Popup](https://popup.dominodatalab.com/nyc2017), held in West SoHo. I was invited to speak at ISBIS ([slides here](http://rpubs.com/HarlanH/gamlss_accum_isbis), if you’re curious), but for this post, I want to summarize some insights from other people’s talks.
+
+In chronological (to me) order… First a few talks from ISBIS that I particularly liked (note that I only saw a fraction of all the talks):
+
+* [Merlise Cylde](http://www2.stat.duke.edu/~clyde/) from Duke talked about Bayesian Model Average, which is interesting and clearly hard. She used some terminology that was new to me, although apparently it [goes back to 2000](https://books.google.com/books/about/Bayesian_Theory.html?id=cl6nAAAACAAJ): **M-Closed, M-Complete**, and **M-Open** describe the relationship between the true data-generating process and the space of models you’re exploring. Using [Machine Learning theory jargon](http://www.pling.org.uk/cs/com6170.html) instead of statistical jargon: M-Closed means that the hypothesis space is known to include the “true” target function; M-Complete means that you know that the target function is too complex, and that your hypothesis space only includes approximations; M-Open means that you have no idea whether your hypothesis space includes the target function or not. I like it.
+
+* [John Myles White](http://www.johnmyleswhite.com/) from Facebook talked about A/B testing at web-scale. Best quote: “**the thing that is holding us back is computing percentiles**.” The problem is that to compute percentiles exactly you normally have to sort the data, which is practically impossible if it’s petabytes long. There are approximation schemes that are fast, but apparently they’re problematic if you’re trying to compute a 99th percentile and you get a number that might be anywhere from the 98th to the 100th percentile.
+
+* [Zhenming Lin](http://zmliu.org/) from the College of William and Mary talked about a research paper under review that unifies [block model](https://en.wikipedia.org/wiki/Stochastic_block_model) and [small-world models](https://en.wikipedia.org/wiki/Small-world_network) of networks. Part of it was over my head, but the intuition was that you could project the high-dimensional set of connections down to a low-dimensional space, then **use [topological data analysis](https://en.wikipedia.org/wiki/Topological_data_analysis) to recover linear distance**, which would either be spiky in the case of a block model, or flat in the case of a small-world model. Seemed clever and potentially useful.
+
+And a few talks from the DDL Popup led to both interesting questions and great insights:
+
+* I’ve been thinking a bit recently about what aspects of mostly-transactional customer service can be automated, and which can’t, and how to do that balance. In a panel discussion about data in the beauty products retail industry, [Jenifer Jones-Barbato](https://twitter.com/jeniferjones) from Estee Lauder talked about the challenges of translating the “lady at the counter” at a department store to an online recommendation system. **What parts of that personal interaction are intrinsically valuable? What parts, when automated, feel creepy?**
+
+* Another thing I’ve been thinking about is how and when data folks can embrace qualitative data. [Alex Leeds](https://www.linkedin.com/in/alexleeds/) from Squarespace discussed how they **use qualitative data from user interviews to inform what quantitative data to collect at scale**. Data science for digital products should be thought of as an extension of UX/Design efforts, I think, with Design leading.
+
+* [Eduardo Ariño de la Rubia](https://www.linkedin.com/in/earino/) from Domino Data Labs compellingly highlighted all the ways in which **we live in an era of Data Science automation**. I completely agree, and have in the past argued that the reason why Data Science came about, as a career, around ten years ago, was that the tools got good enough that one person (and in fact, many thousands of people, often with skills learned in academic science) could do the full process from data collection and exploration, modeling, and presentation or integration into a data product, on their own, on a laptop. Previous data mining and predictive analytics processes tended to require larger teams of people with specific skills.
+
+* [Jon Roberts](https://www.linkedin.com/in/jonathan-roberts-8b0a2411/) from dotdash (formerly About.com) gave a talk full of pithy quotes. Here are a few: 1) “Convince people that science can be applied to your problem,” for example by showing that you can answer the question: “is it seasonal or is it real?” 2) “Machine Learning can’t tell you the precision that the business needs.” 3) “Someone talking about your work has to be able to talk about your work.” 4) “Small data matters a lot, lot more than big data.” 5) “**Making people laugh with data is the best version of data science**.”
+
+* [Alfred Lee](https://www.linkedin.com/in/leealfred/) talked about the role of curiosity in data science, and how it drives hypothesis generation, and thus the creation of knowledge and systems. A great audience question he addressed was about how that trait, **curiosity, also leads to a tendency to go down rabbit holes, neglect reproducibility, and neglect data quality issues**. He suggested techniques such as paired work and frequent stakeholder (not supervisor) checkins to minimize this tendency.
+
+* [Max Shron](https://www.linkedin.com/in/mshron/) from Warby Parker talked about how they plan data science projects to set them up for success and impact. They have a ranked list of things that are important, and wisely, they **prioritize solutions that fit into a workflow over model accuracy**. A useful, used solution beats a perfect, unused solution every time.

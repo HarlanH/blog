@@ -1,0 +1,53 @@
+---
+title: Thoughts on Managing Data Science Team Workstreams (and a Shiny app)
+author: ''
+date: '2016-01-28'
+slug: thoughts-on-managing-data-science-team-workstreams-and-a-shiny-app
+categories:
+  - professional
+tags:
+  - data science
+  - management
+  - business
+  - R
+  - Shiny
+---
+
+
+
+<p><em><a href="https://medium.com/@HarlanH/thoughts-on-managing-data-science-team-workstreams-and-a-shiny-app-f2b25549946f">This post was originally published on Medium</a></em></p>
+{{% tweet "198093512149958656" %}}
+<p>There are different types of data scientists, with different backgrounds and career paths. With Sean Murphy and Marck Vaisman, I wrote an article about this for O’Reilly a few years back, based on survey research we’d done. <a href="http://shop.oreilly.com/product/0636920029014.do">Download a copy</a>, if you haven’t read it. This idea is now pretty well established, but I want to talk about a related issue, which is that the <em>type of work</em>that Data Science teams do varies a lot, and that managing those types of work can be an interesting challenge.</p>
+<p>As <a href="https://twitter.com/josh_wills/status/198093512149958656">Josh Wills said</a>, data scientists aren’t software developers, but they sometimes do that sort of work, and they aren’t statisticians, but they sometimes do that sort of work too. At <a href="https://www.eab.com/">EAB</a>, where I lead a Data Science team of people with very diverse backgrounds and skill sets, this issue leads to a lot of complexity and experimentation as we (and the upper management I report to) try to ensure that everyone is working on the right tasks, at the right time, efficiently.</p>
+<p>In this post, I’d like to share some thoughts about how we currently think about and manage different types of Data Science work. I also wrote a little Shiny web tool to help us manage our time, and I’ll show that off as well.</p>
+<p>A recent innovation on our team is partial adoption of Agile/<a href="https://en.wikipedia.org/wiki/Scrum_(software_development)">Scrum</a> development processes. We now have daily standup meetings, two-week sprints with kickoff and retrospective meetings, and time estimation for (some of) our tasks. In general, I’m not a fan of process for its own sake, but as the team has grown, it’s become more important to have visibility into projects, to ensure that they’re on-track and not stuck or moving off on a (fascinating) tangent. So far, two of the most valuable pieces of Scrum are having processes that cause us to add more definition to projects and tasks, along with the retrospective meeting, where we review the most recent sprint and try to improve our own processes.</p>
+<p>Scrum has limitations for us, though. For one thing, most of our projects are fairly specialized, and the standard practice of having the team as a whole estimate task difficulty is not viable when backgrounds differ so much. So we have the people who are working on a project or task estimate for themselves.</p>
+<div class="figure">
+<img src="https://cdn-images-1.medium.com/max/2000/1*kNX1e4-zkdapyAGS1h4ziQ.png" />
+
+</div>
+<p>The bigger issue is the variety of workstreams. For us, we have four main categories of work:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Development</strong>– writing code for applications, either analytic services that are part of our company’s product, or internal web applications used by us or others. All of us do this work, but some data scientists specialize in this sort of work.</p></li>
+<li><p><strong>Research</strong>– trying to understand something better. We divide this into three subcategories:<em>insights research</em> is about understanding our customers’ domain and data better;<em>algorithm research</em> is about matching data science approaches to business needs; <em>technology research</em> is about improving our technology stack.</p></li>
+<li><p><strong>Service</strong>– repeatable operations tasks, usually customer specific, such as model-fitting or ad hoc analysis.</p></li>
+<li><p><strong>Team Development</strong>– interviewing, training, teaching, writing blog posts, volunteer work, etc.</p></li>
+</ol>
+<p>Our Development work is not that different from our colleagues who sling Java all day (except that we don’t have to sling Java, thankfully). We use relatively standard Scrum processes for these tasks, including breaking down Epics into smaller Tasks, estimating those Tasks, having Task kick-off meetings to ensure requirements are clear, and of course we use modern software development processes such as git, code reviews, and continuous testing and integration.</p>
+<p>Our Research work is a hybrid. For a six-week project, we might have a high-level project plan that keeps the work focused on specific questions to be answered, as well as a series of technical tasks that are managed mostly like Development work. If you’re trying to figure out what algorithm to use for something, you probably have tasks that look like “read papers” as well as tasks that look like “build data pipeline”. In the former case we <a href="https://en.wikipedia.org/wiki/Timeboxing">time-box</a> the work, to ensure that it’s targeted and not encyclopedic; in the latter case, we usually have enough information to treat the task as Development work once it’s ready to start.</p>
+<p>Our Service work is totally different. It’s often kicked off and constrained by other teams, and we manage it with a fairly traditional <a href="https://en.wikipedia.org/wiki/Kanban_(development)">Kanban</a> process. People who have time pick up a ticket and own until it’s done. (Our primary Service tasks typically take 4 to 8 hours of work, spread out over a couple of weeks as we run into issues, resolve them, get feedback, and so on.) We track velocity, but don’t estimate it.</p>
+<p>Finally, our Team Development work is even more ad hoc, and we don’t currently do any sort of task tracking here, aside from conversations at one-on-one meetings.</p>
+<div class="figure">
+<img src="https://cdn-images-1.medium.com/max/2000/1*aYZ09Il8RFaF5GI_j2aXtg.png" />
+
+</div>
+<p>A few months back, it became clear that allocating people’s time between these workstreams was really important. Even if we were managing specific projects well, we weren’t necessarily balancing them at a high level. Because of this, we now allocate each person’s time (including mine) into the four workstreams for each two-week sprint. This helps keep people on task, and even more importantly, keeps them from taking on too much of one type of work and neglecting other projects, without having to micromanage every task or treat all tasks the same.</p>
+<p>To manage and communicate this time allocation, I developed an incredibly quick-and-dirty Shiny web application called Team Time. (I’ve spent more time writing this blog post than I did on the first version of the tool!) Team Time does one thing — it manages a table of people, workstreams, and days, allows interactive editing, and shows handy summary graphs.</p>
+<p>As you can see in the screenshot, the current version has two tables, Current and Next, so you can work on time allocation for the next sprint while you keep the table available for the current one. You can add rows (but not columns, for technical reasons) from the UI, and you can edit cells in the table. When you press Save, the table is saved and other people will see the updates when they reload.</p>
+<p>Why is this useful? Nearly identical functionality could be built as a shared Excel or Google Sheets document. But UX matters, and many companies have grown from nothing by taking an Excel template and turning it into an easy-to-use web app. In this case, we get a tool with a simple, functional interface that does what we need, written with tools we know, and it’s accessible in a single click from our team’s web portal.</p>
+<p>How do we use it? During our biweekly sprint kickoffs, we walk through Next, make changes from my proposed time allocation as necessary, Save it to Current, then move on to more detailed assignment of tasks to the new sprint. The total days per area give us valuable guidelines for how many points of tasks from the Development and Research backlogs should be moved into the sprint. And having this high-level view of workstreams helps people manage expectations, and provides a backdrop for retrospective meetings as well.</p>
+<p>Over time, as we learn more, I expect the tool to continue to evolve. Better history might be handy, for reporting purposes. Synchronized changes would be fun. Maybe <a href="http://www.catb.org/jargon/html/Z/Zawinskis-Law.html">Zawinski’s Law</a> will apply, and it’ll send email at some point.</p>
+<p>As this tool is <em>not</em> a core competency of our company, I’ve open sourced the application, so you can use it (or improve it), if you’d like!</p>
+<p>A <a href="https://harlanh.shinyapps.io/team-time/">sample, public version of the app is on ShinyApps</a>. Feel free to play around with it. Right-click on the table to add/delete rows. (Note that whenever the app restarts, which it might do at arbitrary times, the tables on the disk is reset. Our copy is running inside our firewall on a copy of Shiny Server.)</p>
+<p>The <a href="https://github.com/advisory/team-time">code is on GitHub</a>, MIT licensed. A few shout-outs about handy R packages that made this possible with almost no effort. <a href="http://shiny.rstudio.com/">Shiny</a>, of course, for the web app framework, and <a href="https://rstudio.github.io/shinydashboard/">shinydashboard</a> for the template. <a href="http://jrowen.github.io/rhandsontable/">rhandsontable</a>, an R wrapper for the <a href="https://handsontable.com/">handsontable.js</a> Javascript library, for the interactive table. And ggplot2, magrittr, and tidyr from the <a href="http://blog.revolutionanalytics.com/2015/03/hadleyverse.html">Hadleyverse</a> made the table manipulation and visualization almost trivial. Pull requests very welcome!</p>
+<p>Oh, and if you’ll be at the <a href="https://www.rstudio.com/shinydevcon/">Shiny Developers Conference</a> this weekend (Jan 30th-31st, 2016), and want to chat about any of this, see you there!</p>
