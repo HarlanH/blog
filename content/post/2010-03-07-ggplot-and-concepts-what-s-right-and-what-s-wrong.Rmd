@@ -1,0 +1,62 @@
+---
+title: "ggplot and concepts -- what's right, and what's wrong"
+author: ''
+date: '2010-03-07'
+slug: ggplot-and-concepts-whats-right-and-whats-wrong
+categories:
+  - professional
+tags:
+  - ggplot2
+  - graphics
+  - programming
+  - R
+---
+
+A few months back I gave a presentation to the <a href="http://www.meetup.com/nyhackr/">NYC R Meetup</a>. (<a href="http://www.r-project.org/">R</a> is a statistical programming language. If this means nothing to you, feel free to stop reading now.) The presentation was on <a href="http://had.co.nz/ggplot2/">ggplot2</a>, a popular package for generating graphs of data and statistics. In the talk (<a href="http://www.vcasmo.com/video/drewconway/7017">which you can see here</a>, including both my slides and my patter!) I presented both the really great things about ggplot2 and some of its downsides. In this blog post, I wanted to expand a bit on my thinking on ggplot, the Grammar of Graphics, and how peoples' conceptual representations of graphs, data, ggplot, and R all interact. ggplot is both incredibly elegant and unfortunately difficult to learn to use well, I think as a consequence of the variety of representations.<!--more-->
+
+The ggplot package, written by the overachieving and remarkable <a href="http://had.co.nz/">Hadley Wickham</a>, is based on <a href="http://books.google.com/books?id=_kRX4LoFfGQC&amp;dq=grammar+of+graphics&amp;printsec=frontcover&amp;source=bn&amp;hl=en&amp;ei=7kZsS8-lDI_e8Qb4hcD2BQ&amp;sa=X&amp;oi=book_result&amp;ct=result&amp;resnum=4&amp;ved=0CB8Q6AEwAw#v=onepage&amp;q=&amp;f=false">earlier more theoretical work by Leland Wilkinson</a>. Wilkinson abstracted the process of putting data onto an image, and created a Grammar of Graphics, which describes <em>how</em> the data maps to the parts of a graph, rather than describing the final graph itself. For example, here's how to create a pie chart, clipped from Wilkinson's book:
+
+![](/post/grammarofgraphics.png)
+
+Don't worry about the details, but briefly, a pie chart is just a stacked bar graph (summary.proportion) plotted in polar coordinates (polar.theta). If you took the time to learn this grammar, you would realize that the hierarchical structure of a graph on a page (elements have positions and labels and visual properties like color, each of which have their own abstract structure) maps cleanly to the hierarchical structure of the grammar, and that variables in the grammar map cleanly to the linear structure of the data. As a user of this system, you would be able to see all three key representations at once: the <span style="text-decoration: underline;">data</span>, the <span style="text-decoration: underline;">grammatical mapping</span> from data to graph, and the <span style="text-decoration: underline;">graph</span> itself.
+
+Now consider ggplot, the implementation of the Grammar of Graphics in the R programming language. Does ggplot maintain three visible representations, all straightforwardly mappable to each other? Sadly, it does not. Instead, users of ggplot must map among four representations: the <span style="text-decoration: underline;">data</span> (a standard data.frame object), the <span style="text-decoration: underline;">R syntax</span> for ggplot2 (which has some quirks), an <span style="text-decoration: underline;">underlying ggplot object</span> (similar to the Grammar of Graphics, but vastly more complex and impossible to examine directly), and the generated <span style="text-decoration: underline;">graph</span>.
+
+Consider the simple pie graph, below.
+
+![](/post/ggplotpie.png)
+
+This chart is generated in ggplot2 by the following R code:
+```r
+> zz <- data.frame(cat=c("a", "b"), val=c(5,3))
+
+> zz
+ cat val
+1   a   5
+2   b   3
+> pp <- ggplot(zz, aes(x="", y=val, fill=cat)) + geom_bar(width=1) + 
+        coord_polar("y")
+> print(pp)
+```
+
+The print() function is optional within an R interpreter session, but I include because it illustrates a point that's not initially obvious to many users. Unlike the built-in R plotting tools, the ggplot() function and its associated functions don't plot anything on the screen, they just construct an object of type "ggplot". Almost all of the actual work of mapping the data to stuff on your screen occurs when you print that object, using print() or ggsave().
+
+So what does that object look like? If you type str(pp), you'll get an answer, but it's about a hundred lines of undecipherable hierarchical object and list structure, not intended to be examined by mere mortals. But there's something critically important about that structure -- like the original Grammar of Graphics, and unlike the R syntax above, it's hierarchically structured.
+
+In the R syntax, you create a base ggplot structure with the ggplot() call, then you abuse the "+" operator to make changes to that structure. The geom_bar() function adds a layer to the ggplot() object, where a layer is just what it sounds like, a set of information about one of potentially many overlaid layers of content that will be put on the graph. So you construct a ggplot object by first initializing everything about the basic plot, then tack on layers with +, right? Actually no, because the coord_polar() call doesn't create or modify a layer at all, it modifies the base object! Even if you've acquired the nonobvious intuition that ggplot objects are hierarchical and are created by concatenating layers, you now have to break the analogy again to fully understand what + is doing!
+
+There is a way to partially see the structure directly, but it's not well thought-out from the point of view of someone trying to learn how to use the package. The summary() method on ggplot objects tells you about things you didn't specify (faceting?), it's incomplete, and it doesn't map well to the R syntax. If something in your plot isn't working the way you want it to, summary() won't help you.
+
+```r
+> summary(pp)
+mapping:  x = , y = val, fill = cat
+faceting: facet_grid(. ~ ., FALSE)
+-----------------------------------
+geom_bar:
+stat_bin: width = 1
+position_stack: (width = NULL, height = NULL)
+```
+
+Another shortcut that leads to conceptual problems by ggplot beginners is the use of qplot(). The qplot() function is a wrapper around ggplot(). Unlike ggplot(), you can give qplot() data that is not in the form of a data.frame, and the syntax is somewhat different. There's nothing wrong with some syntactic sugar to make life easier, but in this case, learning ggplot by starting with qplot is like trying to learn a foreign language by starting with contractions and slang. You may be able to say a few essential things on your vacation, but you won't be able to creatively construct new sentences as new situations arise. The brilliance of the Grammar of Graphics is exactly that it's a grammar -- you can construct new graphs and new types of graphs as new situations arise! But tutorials that start with qplot, with <a href="http://had.co.nz/ggplot2/book/" target="_blank">the ggplot book </a>an unfortunate (but in other ways excellent) example, send their learners down a linguistic garden path. To fully use the power of the system requires unlearning the conceptual structures that map the slang to charts on a screen, and starting over with learning the new, more powerful ggplot() grammar and hierarchical representations.
+
+I'd like to conclude this overlong rant with two notes. First, just today <a href="http://pleasescoopme.com/2010/03/07/jjplot-yet-another-plotting-library-for-r/" target="_blank">a new graphics package for R was introduced</a>. <a href="http://code.google.com/p/jjplot/" target="_blank">jjplot</a> uses many of the ideas of the Grammar of Graphics and ggplot2, but seems to avoid at least a few of the conceptual problems. The + operator is not overloaded in conceptually confusing ways, and there is no distracting qplot function to mislead new users. Additionally, a quick look at the source code finds it much, much simpler than ggplot2's source, which will likely lead to a more active base of contributors. I look forward to trying jjplot and watching its continuing development, and hope the authors learn from both the remarkable successes and frustrating failures of ggplot. Second, I use ggplot extensively in my work. It's simply the best available tool for quickly generating elegant graphs of data in R, especially if that generation needs to happen automatically in code. Hadley Wickham deserves extensive praise for the amount of effort he has put into developing and popularizing the Grammar of Graphics. If you want to be maximally effective when visualizing data in R, take the time to learn ggplot2, but do so while keeping in mind that the learning process will be easiest if you skip qplot and other shortcuts, think hierarchically, and prepare for some frustration. Fortunately, the support communities on the <a href="http://groups.google.com/group/ggplot2" target="_blank">ggplot mailing list </a>and <a href="http://stackoverflow.com/questions/tagged/ggplot2" target="_blank">Stack Overflow </a>are extremely helpful, as is Hadley himself.

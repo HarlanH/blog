@@ -1,0 +1,17 @@
+---
+title: how to speak ggplot2 like a native, and Predictive Analytics World
+author: ''
+date: '2010-10-24'
+slug: how-to-speak-ggplot2-like-a-native-and-predictive-analytics-world
+categories:
+  - professional
+tags:
+  - ggplot2
+  - meetup
+  - R
+---
+
+I was recently given the opportunity to re-present <a href="http://www.harlan.harris.name/2010/03/ggplot-and-concepts-whats-right-and-whats-wrong/">my ggplot2 talk, which I originally gave</a> to <a href="http://www.meetup.com/nyhackr/">the NYC R Meetup</a>, to <a href="http://www.meetup.com/R-users-DC/">the DC R Meetup </a>group. The Meetup was held co-located with the <a href="http://www.predictiveanalyticsworld.com/">Predictive Analytics World </a>conference in Alexandria, VA. (More on my thoughts on PAW below...) Contentwise, I made only small changes, changing a bit of patter and adding more examples at the end. I still love ggplot, with some frustration at the way it is typically introduced. Some of the audience had no R experience at all, while others were experts. One person, a grad student at U. of Maryland, had had very similar difficulty as I had when originally learning ggplot2, and his enthusiastic nods during my presentation were very validating! For reference, <a href="http://www.meetup.com/R-users-DC/calendar/14236478/">the Meetup page is here</a>, and I stuck the current version of the slides in a public <a href="http://www.dropbox.com/">Dropbox</a>, <a href="http://dl.dropbox.com/u/7644953/ggplotIntro%20-%20PAW2010.pptx">located here</a>.
+
+And a few thoughts about PAW. The conference was well-run (although I have my gripes with the hotel and its location!) and there were an interesting and eclectic lineup of speakers, from a variety of industries. Compared to academic conferences I've attended, I missed having all the grad students around. At PAW, I felt rather young, which had not been true at academic conferences in quite a long time! The content of the conference focused on people using predictive methods (statistics, data mining, machine learning) at the individual-customer level, for marketing or retainment or other purposes. That's not my primary interest right now -- my work is focused at a slightly higher <a href="http://en.wikipedia.org/wiki/Operations_research">operations-research</a>-y level, trying to make sure that customers in the aggregate have good options. But I enjoyed learning about what other people are doing using somewhat similar methods. Next year, though, I think I'll try to go to a different conference, perhaps <a href="http://www.warwick.ac.uk/statsdept/useR-2011/">UseR!</a> in the UK, or <a href="http://meetings2.informs.org/Practice2011/">INFORMS' applied conference</a>...
+

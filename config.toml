@@ -1,5 +1,5 @@
 # hostname (and path) to the root eg. https://appernetic.github.io/
-baseurl = "http://harlan.harris.name"
+baseurl = "http://harlan.harris.name/"
 
 # Remark if you want to disable multilingual support.
 DefaultContentLanguage = "en"
@@ -30,7 +30,7 @@ paginatePath = "page"
 
 
 [permalinks]
-post = "/:year/:month/:day/:slug/"
+post = "/:year/:month/:slug/"
 code = "/:filename/"
 
 [taxonomies]

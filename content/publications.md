@@ -15,13 +15,12 @@ toc = true
 
 ## Public Presentations
 
-Forecasting Repeated Accumulating Processes with Semiparametric Regression Models and Bayesian Updates. (2018) 
-
 [Collecting and Making Sense of Diverse Data at WayUp](https://www.slideshare.net/HarlanHarris/collecting-and-making-sense-of-diverse-data-at-wayup/1). (2017) [DataEngConf 2017, New York City](http://www.dataengconf.com/).
 
 [APIs and DSLs for Building and Integrating Many Models](http://www.papis.io/2017/program/talks-list/apis-and-dsls-for-building-and-integrating-many-models-harlan-harris). (2017) [PAPIs 2017, Boston](http://www.papis.io/2017).
 
-[Forecasting Repeated Accumulating Processes with Semiparametric Regression Models and Bayesian Updates](http://rpubs.com/HarlanH/gamlss_accum_isbis). (2017-2018) [NY Open Statistical Programming Meetup](https://www.meetup.com/nyhackr/events/239407673/); [International Society for Business and Industrial Statistics Conference 2017, Westchester, NY](http://www.isbis2017.org/program/); Conference on Statistical Practice 2018, Portland, OR.
+[Forecasting Repeated Accumulating Processes with Semiparametric Regression Models and Bayesian Updates](http://rpubs.com/HarlanH/gamlss_accum_isbis). (2017-2018) [NY Open Statistical Programming Meetup](https://www.meetup.com/nyhackr/events/239407673/); [International Society for Business and Industrial Statistics Conference 2017, Westchester, NY](http://www.isbis2017.org/program/); 
+[Conference on Statistical Practice 2018, Portland, OR](https://ww2.amstat.org/meetings/csp/2018/).
 
 [Big Data, Public Policy, Higher Ed, & Industry: Statistics, Challenges, & Opportunities](https://drive.google.com/file/d/0B3aXKp9bt6OXczJELVFCSmw2bWs/view?usp=sharing). (2016) [WSS Big Data in the Public Sector Mini-Conference](http://www.eventbrite.com/e/big-data-in-public-sector-registration-21116863106).
 

@@ -1,0 +1,24 @@
+---
+title: Online publishing, micropayments, and warm fuzzy feelings
+author: ''
+date: '2009-10-20'
+slug: online-publishing-micropayments-and-warm-fuzzy-feelings
+categories:
+  - professional
+tags:
+  - internet
+  - journalism
+  - microeconomics
+  - money
+---
+
+The problem of how to monetize online publishing, particularly news publishing,  is neither new nor all that surprising. But the ongoing lack of a solution is steadily eating into news organizations across the country. Yesterday, [the Times announced it was going to buy out or lay off 8% of its newsroom staff](http://www.nytimes.com/2009/10/20/business/media/20times.html?ref=business), despite being the best national newspaper in the country and probably the one making the best use of Internet technologies. ([Their interactive graphics are some of the best around.](http://infosthetics.com/cgi-bin/mt/mt-search.cgi?search=nytimes&IncludeBlogs=1&limit=20)) How can newspapers make money on the web? Ad revenue is inadequate, and people won’t generally pay for content. [This post](http://www.niemanlab.org/2009/09/micropayments-for-news-the-holy-grail-or-just-a-dangerous-delusion/) from a journalism blog at Harvard discusses why micropayments will never work:
+
+> Apple can charge for music because it controls access to the songs from all the major record labels. Phone companies and cable companies can charge usurious rates for text messaging and Internet because they have little or no real competition. How does any of that apply to newspapers? … Newspapers have spent the past 100 years or so with a stranglehold on both the tools of mass publishing and the means of distribution, and much of what has happened to them over the past decade is a result of them losing both of those things. The unfortunate reality is that even the best micropayment system is not going to recreate that system of artificial scarcity and control…
+
+But I think there’s a way that might work, a way that leverages human psychology. [People like to feel like they’re in control](http://www.ehow.com/how_5430509_give-children-choices.html), and 
+[they like to feel like they have a voice in the system](http://freakonomics.blogs.nytimes.com/2005/06/13/why-dont-economists-vote/). Micropayment systems that require you to pay 10 cents to read an article, based on a headline or a link, or subscription systems that take your money and give you something you can get elsewhere for free, just make you resentful. So instead, _design the system so that you associate feeling good about what you have just read with giving money to the people who produced the content_. Here’s how it might work.
+
+If I decide I want to read content from a consortium of providers (say, anything owned by The New York Times Company, or Time-Warner, or [Seed Media Group](http://seedmediagroup.com/), or a group of publishers that set up their own consortium), I set up an account, pay my \$50/year, and get access. If I like a piece of content (article, podcast, interactive graphic, whatever), I click the “Tip the Author(s)” button, and a chunk of my \$50, maybe 10 cents, gets redirected to the actual people creating the content I actually _like_ (not just start to read). If I don’t use up my $50 for the year, the balance just gets split internally by the consortium. This way, readers have a feeling of control and an association of paying with pleasure, providers get cash, and the best providers get the most cash.
+
+Information management for this would be straightforward, and it would (I think) work. People _like_ to tip for good service. Let them tip for informative, well-reported news.

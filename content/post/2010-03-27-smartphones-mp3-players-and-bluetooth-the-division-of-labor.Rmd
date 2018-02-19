@@ -1,0 +1,28 @@
+---
+title: 'Smartphones, MP3 players, and Bluetooth: the division of labor'
+author: ''
+date: '2010-03-27'
+slug: smartphones-mp3-players-and-bluetooth-the-division-of-labor
+categories:
+  - personal
+tags:
+  - bluetooth
+  - gadgets
+  - mp3
+  - phones
+  - smartphones
+---
+
+As more and more people get smartphones that can play MP3s or streamed music, like the iPhone or Android phone like the upcoming <a href="http://www.engadget.com/2010/03/23/htc-evo-4g-is-sprints-android-powered-knight-in-superphone-armo/" target="_blank" rel="noopener">HTC Evo 4G </a>(I'm gettin' one!), fewer and fewer people are buying standalone MP3 players. Why have two gadgets when you can have just one? But I think there are good reasons to do so, but I don't think the right combination of products are currently on the market. Here's my thinking.<!--more-->
+
+First of all, you want to be able to make or answer calls from the gadget that's playing your music. It'll automatically turn off your music when the phone rings, and you can hear the caller through your headphones. This works fine in current smartphones. Good sound quality, and you can use your own headphones. But you still need a cord between your headphones and your phone. And that cord gets caught in things, and it gets in the way when you want to actually use your phone. Clunky.
+
+Solution: Bluetooth. There are two current ways to use bluetooth gadgets with a smartphone. First of all, you can get a stereo bluetooth headset. <a href="http://reviews.cnet.com/headsets/plantronics-voyager-855-bluetooth/4505-13831_7-32600914.html">Here's one </a>that looks like the common one-ear bluetooth headsets for phone use, plus a short cord to a separate earphone for your other ear. There are a variety of options, but they all have the same basic idea. Integrated earphones with microphone, and an <a href="http://en.wikipedia.org/wiki/Bluetooth_profile#Advanced_Audio_Distribution_Profile_.28A2DP.29" target="_blank" rel="noopener">A2DP </a>connection between your phone and the gadget. A2DP streams medium-quality stereo sound in real-time in one direction, plus you can do simple things like tell your phone to pick up a call and stop the music by pushing a button on your headset. Sounds great, but there are problems. You have to use the earphones provided, which means your <a href="http://store.shure.com/store/shure/en_US/pd/productID.105432500" target="_blank" rel="noopener">studio-quality Shure </a>or <a href="http://www.bose.com/controller?url=/shop_online/headphones/noise_cancelling_headphones/index.jsp" target="_blank" rel="noopener">noise-cancelling Bose </a>headphones are useless. Second, the audio quality of A2DP is not that great.
+
+A half-solution is a stereo bluetooth gadget that hangs from your neck or clips on your shirt, with a jack so you can use your own headphones. I have <a href="http://reviews.cnet.com/headsets/tritton-ax-bluestream-bluetooth/4505-13831_7-32896652.html" target="_blank" rel="noopener">one of these</a>, and it sorta works. You can push a button to answer the phone, and it plays the music. But with the better earphones, it's easy to hear the compression issues with A2DP, and there's not much ability to control the music without digging my phone out of my pocket. I mostly use it as a bluetooth telephone headset, and rarely to listen to music. Plus, the processing needed to decode and recode the audio is significant, so my phone is not very useful for much else when it's streaming sound. So the product fails at its intended use.
+
+Instead, I use a dedicated MP3 player. I've got a <a href="http://reviews.cnet.com/portable-video-players-pvps/cowon-iaudio-7-4gb/4505-6499_7-32491087.html" target="_blank" rel="noopener">Cowon iAudio 7</a>, and in many ways it's great. Amazing sound quality, plays OGG files, FM radio, very nice OLED screen. But it doesn't talk to my phone. Why not?
+
+Here's what I want.<em> I want my MP3 player and my phone to be two separate interfaces to the same audio sources</em>. The MP3 files should live on my phone, synced to the cloud or my computer, and of course the phone should pull down Internet content. But my phone should push <em>still-compressed </em>versions of the audio content up to my MP3 player, which can take responsibility for decoding it and sending out to my earphones. I want a small eInk or OLED screen, a microphone, and a few simple buttons on the MP3 player -- just enough to change the volume, skip to the next track, and see what's playing. But I want the rest of the controls (plus duplicates of the ones on the MP3 player) to live on my phone, with a big gorgeous color screen, and lots of room for menus, fancy controls, and all the rest. If I play video on my phone, I want the audio to stream, perfectly-sync'ed, with no loss of quality, to my ears. If the phone rings, I want the ability to use either buttons on the MP3 player, or on my phone, to stop the music and pick up. I want the MP3 player to be <em>a well-integrated accessory</em> to my phone, not an afterthought, and I want each piece in the system (smartphone, MP3 player with microphone, and headphones) to do the things they do the best. As far as I know, the current state-of-the-art is nowhere close to this, but there are no good reasons why not.
+
+Drop me a line when your product that does this is on the market. I'll buy one.
