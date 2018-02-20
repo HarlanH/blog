@@ -6,3 +6,7 @@ h2 {
    color: #2196f3;
    font-size: 35px;
 }
+
+.label-primary {
+    background-color: #bbbbbb;
+}
