@@ -1,0 +1,51 @@
+---
+title: On moving my blog from Wordpress to Blogdown
+author: ''
+date: '2018-03-11'
+slug: on-moving-my-blog-from-wordpress-to-blogdown
+categories:
+  - personal
+  - professional
+tags:
+  - meta
+  - R
+---
+
+
+
+<p>This is my first new post on <a href="http://www.harlan.harris.name">harlan.harris.name</a> for a while. The occasion is a change of scenery. For about 10 years, my primary blog has been on WordPress, more recently supplemented by Medium. But WordPress and Medium are limited for technical writing, and the trend among data people recently has been to publish static sites built with Blogdown and Hugo. So that’s what this is.</p>
+<p>The technology I’m using (more on it below) lets me do fun things like trivially embed math: <span class="math inline">\(\sum_i a^2_i\)</span>, or generate plots with embedded code:</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(cars, aes(speed, dist)) + geom_point()</code></pre>
+<p><img src="/post/2018-02-20-on-moving-my-blog-from-wordpress-to-blogdown_files/figure-html/unnamed-chunk-1-1.png" width="288" /></p>
+<p>I plan to do more of that over time. If you’re curious, I summarize below the history of my professional web presence, and give some highlights of the way this blog is built, and some notes on migrating my old posts from WordPress and Medium to here.</p>
+<div id="history-of-my-professional-web-presence" class="section level2">
+<h2>History of my Professional Web Presence</h2>
+<ul>
+<li>1995–2009: Hand-written web pages on servers owned by universities I was associated with.</li>
+<li>2005–2009: <a href="https://somethinktochewon.blogspot.com/">Blog</a> on Blogspot.com. More of a personal blog than a professional one, but I did write about cognitive science research from time to time.</li>
+<li>2008–2018: WordPress site, most recently hosted on HostGator.</li>
+<li>2009–now: <a href="https://twitter.com/harlanh">Twitter</a>, which has almost entirely been my professional persona. I post less there than I used to, when I was active with <a href="http://datacommunitydc.org">Data Community DC</a>.</li>
+<li>2008–now: <a href="https://www.linkedin.com/in/harlanharris/">LinkedIn</a>, which I was never very active on, but I occasionally still share articles.</li>
+<li>2015–now: <a href="https://medium.com/@HarlanH">Medium</a>, which has been my primary professional blogging platform recently. I will copy everything I post there to here, but not necessarily vice-versa.</li>
+</ul>
+</div>
+<div id="new-blogging-stack" class="section level2">
+<h2>New Blogging Stack</h2>
+<ul>
+<li>I write posts in <a href="https://bookdown.org/yihui/blogdown/">Blogdown</a>, a system for generating static posts. The <a href="https://bookdown.org/yihui/blogdown/rstudio-ide.html">support in RStudio</a> is pretty handy. I write RMarkdown (with embedded code), then whenever I save, the framework generates normal Markdown.</li>
+<li>Blogdown works with <a href="https://gohugo.io/">Hugo</a>, which seems to be a very powerful framework that I’m only scratching the surface of. I’m using a theme called <a href="https://github.com/appernetic/hugo-bootstrap-premium">Hugo Bootstrap Premium</a>, with a few minor style tweaks.</li>
+<li>The code for this blog is all on <a href="https://github.com/harlanh/blog">Github</a>. Please don’t fork my blog and republish it elsewhere. That would be creepy.</li>
+<li>As recommended by the Blogdown folks, I’m using <a href="https://www.netlify.com/">Netlify</a> to post my blog. It’s pretty easy to use. Whenever I push my blog code to Github, Netlify will see the changes and regenerate the site within a minute or two.</li>
+<li>To ensure that, when the very sad day comes that Medium.com shuts down, I don’t lose anything, I’m using a tool called <a href="https://github.com/xdamman/mediumexporter">mediumexporter</a> to archive my Medium posts to this blog. It works relatively will, but see notes below.</li>
+</ul>
+</div>
+<div id="migration-notes" class="section level2">
+<h2>Migration Notes</h2>
+<p>Copying my old WordPress posts was a relatively easy manual process. Because Markdown passes HTML through unchanged, I just copied the HTML source that WordPress provided into new posts. Links and embedded images from other sites (such as Flickr) worked without changes. All that was necessary was to write a few lines of header information, and double-check that nothing weird was going on.</p>
+<p>The <a href="/publications/">publications</a> page was a complex nightmare of nested tags in HTML, so I just copied the text off the web page, and re-created the links when appropriate. The <a href="/about/">about</a> page is new, and rather needs an “under construction” animated GIF…</p>
+<p>The mediumexporter tool works relatively well. For each post, I ran the following pattern:</p>
+<pre class="sh"><code>mediumexporter --headers https://medium.com/@HarlanH/on-how-and-when-to-teach-layers-of-abstraction-in-programming-d220c4b5e5b9 &gt; 2017-10-05-on-how-and-when-to-teach-layers-of-abstraction-in-programming.Rmd</code></pre>
+<p>I’ve submitted an issue to the mediumexporter project recommending a feature (which I might build myself) to <a href="https://github.com/xdamman/mediumexporter/issues/11">support Blogdown specifically</a>. After running the command line above, much of the remaining, somewhat tedious work was to copy known fields into Blogdown’s header format.</p>
+<p>Fortunately, I had some time on an airplane to do the tedious work, and a bit of time on a weekend to finish this post and get everything migrated. From here on out, blogging should be even easier!</p>
+</div>

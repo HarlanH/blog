@@ -62,7 +62,7 @@ toc = true
 
 ## Papers in Refereed Journals
 
-Magnuson, J. S., Mirman, D., Luthra, S., Strauss, T., & Harris., H. D. (submitted). Interaction in spoken word recognition models: Feedback helps.
+Magnuson, J. S., Mirman, D., Luthra, S., Strauss, T., & Harris., H. D. (in press). Interaction in spoken word recognition models: Feedback helps. Frontiers in Psychology.
 
 Harris, H. D., Murphy, G. L., & Rehder, B. (2008). Prior knowledge and exemplar frequency. Memory & Cognition, 36, 1335-1350.
 
@@ -82,6 +82,9 @@ Harris, H. D. & Rehder, B. (2011). Knowledge and resonance in models of category
 & A. Wills (Eds.), Formal Approaches to Categorization, 274-298.
 
 ## Papers in Refereed Conference Proceedings
+
+Harris, H. D. (in press). An Architecture and Domain Specific Language Framework
+for Repeated Domain-Specific Predictive Modeling. Proceedings of Machine Learning Research.
 
 Harris, H. D. (2008). Categorizing Fragments of Exemplars: Experimental and Computational Results. In B. C. Love, K. McRae, & V. M. Sloutsky (Eds.), The Proceedings of the 30th Annual Meeting of the Cognitive Science Society (pp. 409-414). Austin, TX: Cognitive Science Society.
 

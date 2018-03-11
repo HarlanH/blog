@@ -1,0 +1,92 @@
+---
+title: On moving my blog from Wordpress to Blogdown
+author: ''
+date: '2018-03-11'
+slug: on-moving-my-blog-from-wordpress-to-blogdown
+categories:
+  - personal
+  - professional
+tags:
+  - meta
+  - R
+---
+
+This is my first new post on [harlan.harris.name](http://www.harlan.harris.name) for a while. 
+The occasion is a change of scenery. For about 10 years, my primary blog has been on WordPress, 
+more recently supplemented by Medium.
+But WordPress and Medium are limited for technical writing, and the trend among data people recently
+has been to publish static sites built with Blogdown and Hugo. So that's what this is.
+
+The technology I'm using (more on it below) lets me do fun things like trivially 
+embed math: $\sum_i a^2_i$, or generate plots with embedded code:
+
+```{r fig.height=3, fig.width=3}
+library(ggplot2)
+ggplot(cars, aes(speed, dist)) + geom_point()
+```
+
+I plan to do more of that over time. If you're curious, I summarize below the history of
+my professional web presence, and give some highlights of the way this blog is built, 
+and some notes on migrating my old posts from WordPress and Medium to here.
+
+## History of my Professional Web Presence
+
+* 1995--2009: Hand-written web pages on servers owned by universities I was associated with.
+* 2005--2009: [Blog](https://somethinktochewon.blogspot.com/) on Blogspot.com. More of a personal
+blog than a professional one, but I did write about cognitive science research from time to time.
+* 2008--2018: WordPress site, most recently hosted on HostGator.
+* 2009--now: [Twitter](https://twitter.com/harlanh), 
+which has almost entirely been my professional persona. I post less there
+than I used to, when I was active with [Data Community DC](http://datacommunitydc.org).
+* 2008--now: [LinkedIn](https://www.linkedin.com/in/harlanharris/), 
+which I was never very active on, but I occasionally still share articles.
+* 2015--now: [Medium](https://medium.com/@HarlanH), 
+which has been my primary professional blogging platform recently. I will copy everything I 
+post there to here, but not necessarily vice-versa.
+
+## New Blogging Stack
+
+* I write posts in [Blogdown](https://bookdown.org/yihui/blogdown/), a system for generating
+static posts. The [support in RStudio](https://bookdown.org/yihui/blogdown/rstudio-ide.html) 
+is pretty handy. I write RMarkdown (with embedded code), then whenever I save, the 
+framework generates normal Markdown.
+* Blogdown works with [Hugo](https://gohugo.io/), which seems to be a very powerful framework
+that I'm only scratching the surface of. I'm using a theme called [Hugo Bootstrap Premium](https://github.com/appernetic/hugo-bootstrap-premium), with a few minor style tweaks.
+* The code for this blog is all on [Github](https://github.com/harlanh/blog). Please don't fork
+my blog and republish it elsewhere. That would be creepy.
+* As recommended by the Blogdown folks, I'm using [Netlify](https://www.netlify.com/) to
+post my blog. It's pretty easy to use. Whenever I push my blog code to Github, Netlify will
+see the changes and regenerate the site within a minute or two.
+* To ensure that, when the very sad day comes that Medium.com shuts down, I don't lose anything,
+I'm using a tool called [mediumexporter](https://github.com/xdamman/mediumexporter) to archive
+my Medium posts to this blog. It works relatively will, but see notes below.
+
+## Migration Notes
+
+Copying my old WordPress posts was a relatively easy manual process. Because Markdown passes
+HTML through unchanged, I just copied the HTML source that WordPress provided into new
+posts. Links and embedded images from other sites (such as Flickr) worked without changes.
+All that was necessary was to write a few lines of header information, and double-check
+that nothing weird was going on.
+
+The [publications](/publications/) page was a complex nightmare of nested tags in HTML, so
+I just copied the text off the web page, and re-created the links when appropriate. The
+[about](/about/) page is new, and rather needs an "under construction" animated GIF...
+
+The mediumexporter tool works relatively well. For each post, I ran the following pattern:
+
+```sh
+mediumexporter --headers https://medium.com/@HarlanH/on-how-and-when-to-teach-layers-of-abstraction-in-programming-d220c4b5e5b9 > 2017-10-05-on-how-and-when-to-teach-layers-of-abstraction-in-programming.Rmd
+```
+
+I've submitted an issue to the mediumexporter
+project recommending a feature (which I might build myself) to
+[support Blogdown specifically](https://github.com/xdamman/mediumexporter/issues/11). 
+After running the command line above, much of the remaining, somewhat tedious work
+was to copy known fields into Blogdown's header format. 
+
+Fortunately, I had some time on an airplane to do the tedious work, and a bit of time on a 
+weekend to finish this post and get everything migrated. From here on out, blogging should
+be even easier!
+
+
