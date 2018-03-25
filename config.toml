@@ -60,6 +60,7 @@ customCSS = ["/css/style_custom.css"]
 BrandImage = ""
 brand = "Somethink to Chew On"
 
+enableEmoji = true
 
 mailmunchid = "" # Mailmunch site id
 sumomeid = "" # Sumome id
