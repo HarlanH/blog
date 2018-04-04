@@ -62,9 +62,9 @@ toc = true
 
 ## Papers in Refereed Journals
 
-Magnuson, J. S., Mirman, D., Luthra, S., Strauss, T., & Harris., H. D. (in press). Interaction in spoken word recognition models: Feedback helps. Frontiers in Psychology.
+[Magnuson, J. S., Mirman, D., Luthra, S., Strauss, T., & Harris., H. D. (2018). Interaction in spoken word recognition models: Feedback helps. Frontiers in Psychology.](https://www.frontiersin.org/articles/10.3389/fpsyg.2018.00369/full)
 
-Harris, H. D., Murphy, G. L., & Rehder, B. (2008). Prior knowledge and exemplar frequency. Memory & Cognition, 36, 1335-1350.
+[Harris, H. D., Murphy, G. L., & Rehder, B. (2008). Prior knowledge and exemplar frequency. Memory & Cognition, 36, 1335-1350.](https://link.springer.com/article/10.3758/MC.36.7.1335)
 
 Hoffman, A. B., Harris, H. D., & Murphy, G. L. (2008). Prior knowledge enhances the category dimensionality effect. Memory & Cognition, 36, 256-270.
 
