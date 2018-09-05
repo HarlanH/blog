@@ -83,8 +83,9 @@ Harris, H. D. & Rehder, B. (2011). Knowledge and resonance in models of category
 
 ## Papers in Refereed Conference Proceedings
 
-Harris, H. D. (in press). An Architecture and Domain Specific Language Framework
-for Repeated Domain-Specific Predictive Modeling. Proceedings of Machine Learning Research.
+[Harris, H. D. (2018). An Architecture and Domain Specific Language Framework
+for Repeated Domain-Specific Predictive Modeling.
+In The Proceedings of Machine Learning Research, 4th International Conference on Predictive Applications and APIs.](http://proceedings.mlr.press/v82/harris18a/harris18a.pdf)
 
 Harris, H. D. (2008). Categorizing Fragments of Exemplars: Experimental and Computational Results. In B. C. Love, K. McRae, & V. M. Sloutsky (Eds.), The Proceedings of the 30th Annual Meeting of the Cognitive Science Society (pp. 409-414). Austin, TX: Cognitive Science Society.
 
