@@ -106,12 +106,12 @@ extensionmask = []
     pre = "<i class='fa fa-twitter'></i>"
 [[menu.main]]
     name = "LinkedIn"
-    url = "https://linkedin.com/profile/harlanharris"
+    url = "https://www.linkedin.com/in/harlanharris/"
     weight = 4
     pre = "<i class='fa fa-linkedin'></i>"
 [[menu.main]]
     name = "Medium"
-    url = "https://medium.com/HarlanH"
+    url = "https://medium.com/@HarlanH"
     weight = 4
     pre = "<i class='fa fa-medium'></i>"
 [[menu.main]]
