@@ -15,6 +15,8 @@ toc = true
 
 ## Public Presentations
 
+[Cold-Start Recommendations to Users With Rich Profiles](https://www.slideshare.net/HarlanHarris/coldstart-recommendations-to-users-with-rich-profiles). (2018) [RecSys NYC Meetup](https://www.meetup.com/RecSys-New-York-City/events/250178750/).
+
 [Collecting and Making Sense of Diverse Data at WayUp](https://www.slideshare.net/HarlanHarris/collecting-and-making-sense-of-diverse-data-at-wayup/1). (2017) [DataEngConf 2017, New York City](http://www.dataengconf.com/).
 
 [APIs and DSLs for Building and Integrating Many Models](http://www.papis.io/2017/program/talks-list/apis-and-dsls-for-building-and-integrating-many-models-harlan-harris). (2017) [PAPIs 2017, Boston](http://www.papis.io/2017).
