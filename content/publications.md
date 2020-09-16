@@ -76,6 +76,10 @@ Dell, G. S., Lawler, E., Harris, H. D., & Gordon, J. K. (2003). Models of errors
 
 Dell, G. S., Harris, H. D., & Guest, D. J. (2001). Erreurs de production, contraintes phonotactiques, et expérience récente (Speech errors, phonotactic constraints, and recent experience). Psychologie Français, 46, 55-64.
 
+## Papers Under Submission
+
+Harris, E. S., Harris, H. D., & Malkovsky, M. (submitted). Blood Type Distribution in Autoimmune Diseases: An Anonymous, Large-Scale, Self-Report Pilot Study.
+
 ## Book Chapters
 
 Magnuson, J. S., Mirman, D., & Harris, H. D. (2012). Computational models of spoken word recognition. M. Spivey, K. McRae & M. Joanisse (Eds.), Cambridge Handbook of Psycholinguistics, 76-103.
