@@ -15,6 +15,8 @@ toc = true
 
 ## Public Presentations
 
+[The Software Architecture of WayUp's Job Recommender System](https://docs.google.com/presentation/d/1AOlQj1IiBj0CUjk2750IJIDZhCFcB3LI9EYSZFlLmLo/edit?usp=sharing). (2018) [DataEngConf NYC 2018](https://www.dataengconf.com/speaker/the-software-architecture-of-wayups-job-recommender-system?hsLang=en-us).
+
 [Cold-Start Recommendations to Users With Rich Profiles](https://www.slideshare.net/HarlanHarris/coldstart-recommendations-to-users-with-rich-profiles). (2018) [RecSys NYC Meetup](https://www.meetup.com/RecSys-New-York-City/events/250178750/).
 
 [Collecting and Making Sense of Diverse Data at WayUp](https://www.slideshare.net/HarlanHarris/collecting-and-making-sense-of-diverse-data-at-wayup/1). (2017) [DataEngConf 2017, New York City](http://www.dataengconf.com/).
