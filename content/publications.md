@@ -4,6 +4,9 @@ author = "author"
 draft = false
 type = "page"
 toc = true
+showDate = false
+showShare = false
+showReadTime = false
 [menu]
      [menu.main]
         name = "Publications"
