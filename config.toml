@@ -10,7 +10,7 @@ paginatePath = "page"
 theme = "hugo-clarity"
 DefaultContentLanguage = "en"
 
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown", "_files$", "_cache$"]
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
 
 # Frontmatter format
 # "yaml", "toml", "json"
@@ -132,3 +132,8 @@ since = 2009
     url = "https://stackoverflow.com/users/135944/harlan"
     weight = 4
 
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
