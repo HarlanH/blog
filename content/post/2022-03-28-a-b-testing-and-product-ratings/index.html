@@ -1,0 +1,137 @@
+---
+title: A/B Testing and Product Ratings
+author: Harlan
+date: '2022-03-28'
+slug: a-b-testing-and-product-ratings
+categories:
+  - professional
+tags:
+  - data science
+  - analytics
+  - business
+  - statistics
+  - a/b testing
+featured: no
+toc: no
+usePageBundles: no
+#featureImage: /images/path/file.jpg
+#featureImageAlt: Description of image
+#featureImageCap: This is the featured image.
+#thumbnail: /images/path/thumbnail.png
+#shareImage: /images/path/share.png
+codeMaxLines: 10
+codeLineNumbers: no
+figurePositionShow: yes
+showRelatedInArticle: no
+draft: true
+---
+
+
+<div id="TOC">
+
+</div>
+
+<p>TODO: grab an image of a shoe?</p>
+<p>For certain changes to an e-commerce web site, we’d like to understand not just
+whether users <em>purchase more</em>, but also whether they’re more <em>satisfied</em> with the
+items they purchase.
+There are several ways we could potentially measure this, such
+as return-to-site rate, complaint or refund rate, etc. But the most straightforward
+way is to look at the ratings that users provide.</p>
+<p>Suppose that you run a web site that sells shoes, and you want to test some sort
+of interface change. You may suspect that it won’t affect how <em>many</em> items
+are purchased, but instead will affect <em>which</em> items are purchased, and in
+turn will affect <em>satisfaction</em>.
+As you’re a savvy product analyst, you decide to <a href="https://en.wikipedia.org/wiki/A/B_testing">A/B test</a>
+the interface change, showing half of your users the old version, and half of
+your users the new version. After a few weeks, you can look at what those
+users did, and make a decision to keep the interface chance, or to roll it back.</p>
+<p>There are two problems, though. First, ratings accumulate slowly over time, and
+most people don’t rate their purchases. This means that whatever you
+measure at the end of your experiment is only an approximation to the
+underlying satisfaction of your customers. Can you use this biased estimate
+to make a good decision?</p>
+<p>Second, your A/B test split <em>users</em>, but you’re measuring <em>ratings</em>, which
+are per-item. Some customers will buy multiple pairs of shoes, and most likely
+will either rate all of them or none of them. Does this fact affect how
+confident you can be at the end of the experiment?</p>
+<p>TODO: diagram?</p>
+<div id="delayed-and-biased-ratings" class="section level1">
+<h1>Delayed and Biased Ratings</h1>
+<p>The first issue is that ratings are <em>delayed</em> and <em>incomplete</em> metrics.
+If you order shoes from a web site, the earliest you’ll rate the item would
+be when you receive it, and more likely you’d rate it only after several days or
+weeks. And you might only rate it three months later, when you log back into the
+web site and are reminded of your past orders.</p>
+<p>Furthermore, you might be more willing to rate some items more than others.
+Higher-priced items, where you spent a bunch of time reading reviews, might
+lead to a higher likelihood to rate. Items that were defective on arrival,
+or that were very disappointing, might lead to early, negative ratings.</p>
+<p>All of these complexities affect A/B tests.</p>
+<p>simulate a scenario where the A/B test doesn’t affect the purchase rate (assuming 1 item per user),
+but does affect the underlying satisfaction rate, which affects rating rate and rating timing in a U-shaped manner.</p>
+<p>mention RTR and StitchFix and similar subscription services have insanely high rating rates</p>
+<p>plot the accumulated average rating, rating rate, and distribution, over time, from the start of the experiment
+through much past the end</p>
+</div>
+<div id="randomization-unit-mis-match" class="section level1">
+<h1>Randomization Unit Mis-Match</h1>
+<p>A/B tests are split at the user level, but ratings are per-item. Because some users purchase more than one item
+(and the descision to rate or not is usually all or nothing),
+some users are more generally positive or critical in their reviews,
+and the feature change we’re A/B testing affects users, not the resources,
+ratings by the same user are likely to be correlated.
+This means that standard estimates of uncertainty (such as those provided by all on-line A/B test calculators)
+will be too narrow, meaning that using those estimates will provide overly-confident levels of certainty,
+likely causing incorrect decisions to be made or learnings to be taken.</p>
+<p>Making uncertainty even worse is the randomization mis-match issue described above, where we split users but measure per-resource ratings. Technically, this means that the IID assumption used in calculation of uncertainty intervals is violated, as ratings are not independently drawn.</p>
+<p>To solve this problem, we need to switch from closed-form estimates of uncertainty to bootstrap estimates.
+And, instead of sampling from ratings, we should instead sample from users. So, if user X in bucket A rated 3 items,
+the bootstrap samples would have 0, 3, or 6 (or potentially more) ratings from that user. Intuitively, sampling by
+users will increase the variance of the bootstrap samples, which is what we need to happen.</p>
+<p>Standard bootstrap packages don’t support this method of sampling, but fortunately it’s relatively easy to code.</p>
+<pre class="r"><code># by is either &quot;rating&quot; or &quot;user&quot;
+boot1 &lt;- function(dd, by=&#39;rating&#39;) {
+    # sample with replacement
+    dd_samp &lt;- if (by == &#39;rating&#39;) {
+        slice_sample(dd, n=nrow(dd), replace=TRUE)
+    } else {
+        # sample user_ids with replacement
+        # inner join to the df to get correct duplicated rows
+        distinct_user_ids &lt;- unique(dd$user_id)
+        sample_user_ids &lt;- sample(distinct_user_ids, length(distinct_user_ids), replace=TRUE)
+        dd %&gt;% inner_join(tibble(user_id = sample_user_ids), by=&#39;user_id&#39;)
+    }
+    
+    # calculate the raw ratio
+    a_ratings = dd_samp[[&#39;rating&#39;]][dd_samp[&#39;variant&#39;] == &#39;test&#39;]
+    b_ratings = dd_samp[[&#39;rating&#39;]][dd_samp[&#39;variant&#39;] != &#39;test&#39;]
+
+    n_a = length(a_ratings)
+    n_b = length(b_ratings)
+    p_a = sum(a_ratings == 5) / n_a
+    p_b = sum(b_ratings == 5) / n_b
+    p_b / p_a
+}
+
+n = 2000
+
+# compute a bootstrap estimate, using rating as the sample unit
+# ratios = map_dbl(1:n, ~ boot1(dat_ratings))
+# rating_boot &lt;- quantile(ratios, c(.025, .5, .975)) # same as closed-form above!
+# res_df &lt;- res_df %&gt;% bind_rows(tibble(Method=&#39;Per-Rating (Bootstrap)&#39;, lb=rating_boot[[1]], med=rating_boot[[2]], ub=rating_boot[[3]]))
+
+# compute a bootstrap estimate, using user as the sample unit
+# ratios_user = map_dbl(1:n, ~ boot1(dat_ratings, by=&#39;user&#39;))
+# user_boot &lt;- quantile(ratios_user, c(.025, .5, .975)) # same as closed-form above!
+# res_df &lt;- res_df %&gt;% bind_rows(tibble(Method=&#39;Per-User (Bootstrap)&#39;, lb=user_boot[[1]], med=user_boot[[2]], ub=user_boot[[3]]))</code></pre>
+</div>
+<div id="true-causality-and-guidance" class="section level1">
+<h1>True Causality and Guidance</h1>
+<p>It’s also worth noting the various mechanisms that an A/B-tested intervention could have on ratings.</p>
+<p>The intervention could increase purchase rate or could change the item mix.</p>
+<p>The intervention could directly, or indirectly (via purchase rate or item mix), affect the true satisfaction of items acquired. We cannot directly see true satisfaction.</p>
+<p>The intervention could directly or indirectly (via satisfaction) affect the rate at which items are rated, either by affecting the eventual asymptotic rate, or changing the timing of ratings.</p>
+<p>The intervention could directly or indirectly (via the above factors) affect the rating given.</p>
+<p>This is a complex causal network, and different interventions (e.g., changes to resource impressions by Search or Recommendations changes, or UX design; changes to rating UI/UX or review policy; etc) will affect this chain of effects differently. It’s important to take rating metrics with a grain of salt, even when using the above techniques of delay and bootstrapped estimates. It’s possible that effects of some interventions will be improperly measured, and/or it may be necessary to use different measurement or statistical techniques to understand true satisfaction.</p>
+</div>
