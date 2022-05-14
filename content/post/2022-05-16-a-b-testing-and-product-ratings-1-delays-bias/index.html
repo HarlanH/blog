@@ -1,0 +1,229 @@
+---
+title: 'A/B Testing and Product Ratings, Part 1: Delays and Bias'
+author: Harlan
+date: '2022-05-16'
+slug: 'a-b-testing-and-product-ratings-1-delays-bias'
+categories:
+  - professional
+tags:
+  - data science
+  - analytics
+  - business
+  - statistics
+  - a/b testing
+featured: no
+toc: no
+usePageBundles: no
+featureImage: /images/path/file.jpg
+featureImageAlt: Description of image
+featureImageCap: This is the featured image.
+thumbnail: /images/path/thumbnail.png
+shareImage: /images/path/share.png
+codeMaxLines: 10
+codeLineNumbers: no
+figurePositionShow: yes
+showRelatedInArticle: no
+draft: true
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+
+<p>TODO: grab an image of a shoe?</p>
+<p>Suppose you’re a data scientist at an e-commerce web site, responsible for
+supporting <a href="https://en.wikipedia.org/wiki/A/B_testing">A/B tests</a>.
+Many A/B tests are easy, and there are a number of
+companies that sell tools that make the easy cases as simple as clicking a few
+buttons and looking at pretty graphs. But A/B tests can get statistically
+complex surprisingly quickly, which is why hiring data scientists with a
+strong statistics background can make a big difference in the quality of
+decisions.</p>
+<p>This is the first in a short series of blog posts about situations that
+can arise when testing changes that may affect <em>product ratings</em>, an
+important and ubiquitous part of e-commerce web sites.
+For certain changes to our site, we may want to understand
+not just whether users <em>purchase more</em>, but also whether they’re more
+<em>satisfied</em> with the items they purchase. There are several ways we
+could potentially measure this, such as return-to-site rate, complaint
+or refund rate, etc. But the most direct way to estimate
+satisfaction is to look at the ratings that users provide.</p>
+<p>However, when you’re making <em>changes</em> to the site, your interventions
+can affect ratings in complex ways. This makes A/B testing tricky.</p>
+<p><img src="images/Rating%20Causality.png" /></p>
+<ul>
+<li>The intervention could increase purchase rate or could change the
+mix of items purchased.</li>
+<li>The intervention could directly, or indirectly (via purchase rate or
+item mix), affect the true satisfaction of items acquired. We cannot
+directly see true satisfaction.</li>
+<li>The intervention could directly or indirectly (via satisfaction) affect
+the rate at which items are rated, either by affecting the eventual
+asymptotic rate, or changing the timing of ratings.</li>
+<li>The intervention could directly or indirectly (via the above factors)
+affect the rating given.</li>
+</ul>
+<div id="delayed-and-biased-ratings" class="section level1">
+<h1>Delayed and Biased Ratings</h1>
+<p>Let’s get more specific.
+Imagine you run a web site that sells shoes, and you want to test
+some sort of interface change. You may suspect that the change won’t so much
+affect how <em>many</em> items are purchased, but instead will affect more
+<em>which</em> items are purchased, which in turn will affect <em>satisfaction</em>.
+You care a lot about satisfaction, as it’s closely tied to future purchase
+rate! So, as
+you’re a savvy product analyst, you decide to A/B
+test the interface change,
+showing half of your users the old version, and half of your users the
+new version. After a few weeks, you can look at what those users did,
+and make a decision to keep the interface change, or to roll it back.</p>
+<p>But ratings are <em>delayed</em> and <em>incomplete</em> metrics.
+If you order shoes from a web site, the earliest you’ll rate the item
+would be when you receive it, and more likely you’d rate it only after
+several days or weeks. And you <em>might</em> only rate it three months later,
+when you log back into the web site and are reminded of your past
+orders.</p>
+<p>Furthermore, different people with different experiences differ in their rating
+behavior. Higher-priced items, where you spent a bunch of time reading
+reviews, might lead to a higher likelihood to rate. Items that were
+defective on arrival, or that were very disappointing, might lead to
+early, negative ratings.</p>
+<p>Whatever you measure at the end of your experiment is only an
+approximation to the eventual ratings that will trickle in, and even those
+ratings will be only an approximation of the true satisfaction of your
+customers. All of these complexities affect the
+<a href="https://www.scribbr.com/methodology/reliability-vs-validity/">validity</a> of the
+signal you’re measuring in your A/B test.</p>
+<p>Let’s do some simulations. We don’t need to have
+a realistic model, just something to drive our intuitions. We’ll make this
+really simple:</p>
+<ul>
+<li>10,000 people purchase a pair of shoes.</li>
+<li>Shoes are either cheap or expensive. Assume the purchase mix is 50/50.</li>
+<li>People can be unsatisfied, satisfied, or glowing about their purchase.
+If they rate, they’ll give 1, 2, or 3 stars, respectively.</li>
+<li>The cheap shoes are 20% likely to be unsatisfactory, and 20% likely to have
+the purchaser be glowing.</li>
+<li>The expensive shoes are 10% likely to be unsatisfactory, and 40% likely to
+have the purchaser be glowing.</li>
+<li>Assuming the shoes are satisfactory, people will rate the expensive shoes
+20% of the time, and the cheap shoes 10% of the time.</li>
+<li>Assuming the shoes are satisfactory, and if they’ve decided to rate,
+people will rate early 50% of the time,
+and late 50% of the time.</li>
+<li>If the shoes are unsatisfactory <em>or</em> if the purchaser is glowing,
+the likelihood to rate doubles, and the
+likelihood to rate early increases to 75%.</li>
+<li>The early reviews might be what you see after running an experiment,
+while the later reviews might accumulate months later.</li>
+</ul>
+<p>Here’s some R code to simulate this.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.8
+## ✓ tidyr   1.2.0     ✓ stringr 1.4.0
+## ✓ readr   2.1.2     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>shoe_options = c(&#39;cheap&#39;, &#39;expensive&#39;)
+sat_options = 1:3
+
+sim_ratings &lt;- function(ct=10000,
+                        cheap_sat_prob=c(.2, .6, .2),
+                        exp_sat_prob=c(.1, .5, .4),
+                        rate_probs=c(.1, .2),
+                        rate_mult=2,
+                        late_probs=c(.5, .25)) {
+  ret &lt;- tibble(user=1:ct,
+              shoes=sample(shoe_options, size=ct, replace=TRUE))
+
+  ret %&gt;%
+    mutate(satisfaction=ifelse(shoes==&#39;cheap&#39;,
+                               sample(sat_options, size=ct,
+                                      replace=TRUE, prob=cheap_sat_prob),
+                               sample(sat_options, size=ct,
+                                      replace=TRUE, prob=exp_sat_prob))) %&gt;%
+    mutate(rates_prob=ifelse(shoes==&#39;cheap&#39;, rate_probs[[1]], rate_probs[[2]]) * 
+             ifelse(satisfaction != 2, rate_mult, 1)) %&gt;%
+    mutate(rates_late_prob=ifelse(satisfaction != 2, 
+                                  late_probs[[1]], late_probs[[2]])) %&gt;%
+    mutate(rates=rbinom(ct, 1, rates_prob),
+           rates_late=rbinom(ct, 1, rates_late_prob))
+}
+
+sim1 &lt;- sim_ratings()
+
+res1 &lt;- with(sim1, tribble(
+  ~ name, ~value,
+  &quot;True&quot;, mean(satisfaction),
+  &quot;Early&quot;, mean(satisfaction[rates &amp; !rates_late]),
+  &quot;Eventual&quot;, mean(satisfaction[as.logical(rates)])
+))
+
+theme_set(theme_minimal(base_size=16))
+
+ggplot(res1, aes(name, value, label=sprintf(&#39;%0.2f&#39;, value))) +
+  geom_point(size = 3, color = &quot;black&quot;) + 
+  geom_segment(aes(x=name, xend=name, y=0, yend=value)) +
+  geom_text(nudge_y=.15) +
+  scale_y_continuous(&quot;Average&quot;, limits=c(0,3)) +
+  coord_flip() +
+  labs(&quot;Simulation 1: Parameters in Text&quot;,
+       x=&quot;Rating&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/sim1-1.png" width="672" /></p>
+<p>Even without fully simulating a realistic rating process and a realistic A/B
+test, and even without simulating uncertainty intervals, the
+process of writing this simulation and running the code has caused us to
+realize a few things:</p>
+<ul>
+<li>Ratings don’t reflect true satisfaction. In this toy simulation,
+only 22% of buyers will rate at all,
+and only 13% will rate
+early enough to be observed during an experiment.</li>
+<li>If there are more people who are glowing than dissatisfied,
+and if having strong feelings make you more likely to rate, then ratings will
+look more positive than the actual level of satisfaction.</li>
+<li>Early ratings will differ from late ratings. In this scenario they are
+lower, as they reflect the more negative experiences of people who bought
+more expensive shoes but were dissatisfied.</li>
+</ul>
+</div>
+<div id="implications" class="section level1">
+<h1>Implications</h1>
+<p>So, what do we do about this? I don’t think there’s a one-size-fits-all
+answer. Not all e-commerce business are equal. A company
+that sells shoes might be lucky to have a 10% rating rate, while subscription
+services with very loyal customers, such as Rent the Runway or StitchFix,
+likely have much much higher rating rates. This said, here are some ideas:</p>
+<ul>
+<li>When doing a power analysis, before the experiment starts, be sure
+to use the number of people expected to <em>rate</em> during the experiment, not
+the much larger number of people expected to <em>participate</em> in the experiment.
+This will substantially increase the amount of data you’ll need to collect.</li>
+<li>Look at historical rating patterns. In your specific case, do ratings
+accumulated in the first week or two differ dramatically from the eventual
+ratings? The more that they do, the less valid metrics such as average
+rating will be, and the more work you should put in to ensure you’re making
+the right decisions.</li>
+<li>An easy thing to do is simply to wait. Run the experiment longer, and wait
+longer to get more ratings, before you make a decision.</li>
+<li>Look at rating rates. If the intervention made users much more or less likely
+to rate during the window of your experiment, then the average ratings
+they provide are much less valid.</li>
+<li>Review your past experiments. If you re-analyze an experiment from 6 months
+ago, with most of the ratings that will eventually come in, do you get a
+different answer?</li>
+<li>Thing about mechanisms. You may be tempted to A/B test an intervention
+where you remind people to rate their purchases a week after they receive
+their shoes. This test could easily yield a change in average ratings. But
+it’s important to remember that the change happened <em>after</em> the purchase
+decision, meaning there’s no way that the intervention caused a change in
+satisfaction with their purchase!</li>
+</ul>
+<p>These are not even all of the issues that arise with
+A/B testing and ratings. What if users purchase more than one item? Are your
+statistical tests still valid? Come back soon for answers!</p>
+</div>

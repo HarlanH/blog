@@ -1,0 +1,94 @@
+---
+title: 'A/B Testing and Product Ratings, Part 2: Multiple Ratings'
+author: Harlan Harris
+date: '2022-05-23'
+slug: 'a-b-testing-and-product-ratings-part-2-multiple-ratings'
+categories:
+  - professional
+tags:
+  - data science
+  - analytics
+  - business
+  - statistics
+  - a/b testing
+description: Article description.
+featured: yes
+toc: no
+usePageBundles: no
+featureImage: /images/path/file.jpg
+featureImageAlt: Description of image
+featureImageCap: This is the featured image.
+thumbnail: /images/path/thumbnail.png
+shareImage: /images/path/share.png
+codeMaxLines: 10
+codeLineNumbers: no
+figurePositionShow: yes
+showRelatedInArticle: no
+---
+
+
+
+<p>Second, your A/B test split <em>users</em>, but you’re measuring <em>ratings</em>,
+which are per-item. Some customers will buy multiple pairs of shoes, and
+most likely will either rate all of them or none of them. Does this fact
+affect how confident you can be at the end of the experiment?</p>
+<div id="randomization-unit-mis-match" class="section level1">
+<h1>Randomization Unit Mis-Match</h1>
+<p>A/B tests are split at the user level, but ratings are per-item. Because of this,
+the following facts cause a big problem:</p>
+<ol style="list-style-type: decimal">
+<li>Some users purchase more than one item at a time.</li>
+<li>For users who purchase more than one item, the decision to rate
+or not is usually all-or-nothing.</li>
+<li>Some users are more generally positive and some users are more critical in their reviews.</li>
+</ol>
+<p>Because of these facts, and because the feature change we’re A/B testing
+affects users, not individual items, <em>ratings by the same user are likely to be correlated</em>.
+But the standard ways of estimating uncertainty require that measurements
+be <a href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables">IID</a>, and ratings are definitely not independent.
+Almost any process you use to calculate uncertainty, including those provided
+by <em>all</em> on-line A/B test calculators,
+will be too narrow, meaning that using those estimates will provide
+overly-confident levels of certainty,
+likely causing incorrect decisions to be made or learnings to be taken!</p>
+<p>To solve this problem, we need to switch from closed-form estimates of uncertainty to bootstrap estimates.
+And, instead of sampling from ratings, we should instead sample from users. So, if user X in bucket A rated 3 items,
+the bootstrap samples would have 0, 3, or 6 (or potentially more) ratings from that user. Intuitively, sampling by
+users will increase the variance of the bootstrap samples, which is what we need to happen.</p>
+<p>Standard bootstrap packages don’t support this method of sampling, but fortunately it’s relatively easy to code.</p>
+<pre class="r"><code># by is either &quot;rating&quot; or &quot;user&quot;
+boot1 &lt;- function(dd, by=&#39;rating&#39;) {
+    # sample with replacement
+    dd_samp &lt;- if (by == &#39;rating&#39;) {
+        slice_sample(dd, n=nrow(dd), replace=TRUE)
+    } else {
+        # sample user_ids with replacement
+        # inner join to the df to get correct duplicated rows
+        distinct_user_ids &lt;- unique(dd$user_id)
+        sample_user_ids &lt;- sample(distinct_user_ids, length(distinct_user_ids), replace=TRUE)
+        dd %&gt;% inner_join(tibble(user_id = sample_user_ids), by=&#39;user_id&#39;)
+    }
+    
+    # calculate the raw ratio
+    a_ratings = dd_samp[[&#39;rating&#39;]][dd_samp[&#39;variant&#39;] == &#39;test&#39;]
+    b_ratings = dd_samp[[&#39;rating&#39;]][dd_samp[&#39;variant&#39;] != &#39;test&#39;]
+
+    n_a = length(a_ratings)
+    n_b = length(b_ratings)
+    p_a = sum(a_ratings == 5) / n_a
+    p_b = sum(b_ratings == 5) / n_b
+    p_b / p_a
+}
+
+n = 2000
+
+# compute a bootstrap estimate, using rating as the sample unit
+# ratios = map_dbl(1:n, ~ boot1(dat_ratings))
+# rating_boot &lt;- quantile(ratios, c(.025, .5, .975)) # same as closed-form above!
+# res_df &lt;- res_df %&gt;% bind_rows(tibble(Method=&#39;Per-Rating (Bootstrap)&#39;, lb=rating_boot[[1]], med=rating_boot[[2]], ub=rating_boot[[3]]))
+
+# compute a bootstrap estimate, using user as the sample unit
+# ratios_user = map_dbl(1:n, ~ boot1(dat_ratings, by=&#39;user&#39;))
+# user_boot &lt;- quantile(ratios_user, c(.025, .5, .975)) # same as closed-form above!
+# res_df &lt;- res_df %&gt;% bind_rows(tibble(Method=&#39;Per-User (Bootstrap)&#39;, lb=user_boot[[1]], med=user_boot[[2]], ub=user_boot[[3]]))</code></pre>
+</div>
