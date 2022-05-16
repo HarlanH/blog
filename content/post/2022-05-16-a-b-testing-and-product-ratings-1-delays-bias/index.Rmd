@@ -122,9 +122,11 @@ Here's some R code to simulate this. (Don't worry if you don't read R!
 It just implements the above and makes a graph of three views of the average
 rating.)
 
-```{r sim1, echo=TRUE}
+```{r setup}
 library(tidyverse)
+```
 
+```{r sim1, echo=TRUE}
 shoe_options = c('cheap', 'expensive')
 sat_options = 1:3
 
