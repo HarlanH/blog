@@ -13,7 +13,7 @@ tags:
   - a/b testing
 featured: no
 toc: no
-usePageBundles: no
+usePageBundles: yes
 featureImage: /images/shoe-store.jpg
 featureImageAlt: Shoe store
 codeMaxLines: 10
@@ -122,7 +122,7 @@ Here's some R code to simulate this. (Don't worry if you don't read R!
 It just implements the above and makes a graph of three views of the average
 rating.)
 
-```{r setup}
+```{r setup, include=FALSE}
 library(tidyverse)
 ```
 
