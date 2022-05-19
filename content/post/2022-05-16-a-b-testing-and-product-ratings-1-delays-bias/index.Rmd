@@ -13,7 +13,7 @@ tags:
   - a/b testing
 featured: no
 toc: no
-usePageBundles: yes
+usePageBundles: true
 featureImage: images/shoe-store.jpg
 featureImageAlt: Shoe store
 codeMaxLines: 10
@@ -25,6 +25,7 @@ editor_options:
   markdown: 
     wrap: 72
 ---
+
 
 Suppose you're a data scientist at an e-commerce web site that
 sells shoes, responsible for
