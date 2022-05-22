@@ -1,7 +1,7 @@
 ---
 title: 'A/B Testing and Product Ratings, Part 1: Delays and Bias'
 author: Harlan
-date: '2022-05-16'
+date: '2022-05-22'
 slug: 'a-b-testing-and-product-ratings-1-delays-bias'
 categories:
   - professional
@@ -42,57 +42,55 @@ can arise when testing changes that may affect <em>product ratings</em>, an
 important and ubiquitous part of e-commerce web sites.
 For certain changes to our site, we may want to understand
 not just whether users <em>purchase more</em>, but also whether they’re more
-<em>satisfied</em> with the items they purchase. There are several ways we
-could potentially measure this, such as return-to-site rate, complaint
-or refund rate, etc. But the most direct way to estimate
+<em>satisfied</em> with the items they purchase.
+You care a lot about satisfaction, as it’s closely tied to future purchase
+rate!
+There are several ways we
+could (and should) potentially measure this, such as return-to-site rate, complaint
+or refund rate, etc. But a direct way to estimate
 satisfaction is to look at the ratings that users provide.</p>
 <p>However, when you’re making changes to an e-commerce site, your interventions
 can affect ratings in complex ways. This makes A/B testing tricky.</p>
 <p><img src="images/Rating%20Causality.png" /></p>
 <ul>
-<li>The intervention could increase purchase rate or could change the
+<li>The change could increase purchase rate or could change the
 mix of items purchased.</li>
-<li>The intervention could directly, or indirectly (via purchase rate or
-item mix), affect the true satisfaction of items acquired. We cannot
-directly see true satisfaction.</li>
-<li>The intervention could directly or indirectly (via satisfaction) affect
-the rate at which items are rated, either by affecting the eventual
-asymptotic rate, or changing the timing of ratings.</li>
-<li>The intervention could directly or indirectly (via the above factors)
+<li>The change could indirectly (via purchase rate or
+item mix), or even directly, affect the true satisfaction of items acquired. We cannot
+directly see true satisfaction!</li>
+<li>The change could directly or indirectly (via satisfaction) affect
+the rate at which items are rated, either by affecting peoples’ inclinations
+to rate at any time, or by changing the timing of ratings.</li>
+<li>The change could directly or indirectly (via the above factors)
 affect the rating given.</li>
 </ul>
+<p>Put all of these together, and it’s clear that ratings are a <em>proxy</em> for
+satisfaction, not a direct measurement of satisfaction, and your
+decision-making process should treat the data accordingly!</p>
 <div id="delayed-and-biased-ratings" class="section level1">
 <h1>Delayed and Biased Ratings</h1>
-<p>What if you’re testing a change to the web site’s user interface
-that you expect will shift <em>which</em> items
-are purchased, which in turn will affect <em>satisfaction</em>.
-You care a lot about satisfaction, as it’s closely tied to future purchase
-rate! So, as
-you’re a savvy product analyst, you decide to A/B
-test the interface change,
-showing half of your users the old version, and half of your users the
-new version. After a few weeks, you can look at what those users did
-and make a decision to keep the interface change, or to roll it back.</p>
-<p>But ratings are <em>delayed</em> and <em>incomplete</em> metrics.
+<p>A challenge with ratings in e-commerce is not just that they’re an
+<em>incomplete</em> proxy, but they’re also <em>delayed</em>.
 If you order shoes from a web site, the earliest you’ll rate the item
 would be when you receive it, and more likely you’d rate it only after
 several days or weeks. And you <em>might</em> only rate it three months later,
 when you log back into the web site and are reminded of your past
-orders.</p>
+orders and prompted to rate them.</p>
 <p>Furthermore, different people with different experiences differ in how they
 rate. Higher-priced items, where you spent a bunch of time reading
 reviews, might lead to a higher likelihood to rate. Items that were
 defective on arrival, or that were very disappointing, might lead to
 early, negative ratings.</p>
-<p>Whatever you measure at the end of your experiment is only an
+<p>Whatever you measure at the end of your A/B test is only an
 approximation to the eventual ratings that will trickle in, and even those
 ratings will be only an approximation of the true satisfaction of your
 customers. All of these complexities affect the
 <a href="https://www.scribbr.com/methodology/reliability-vs-validity/">validity</a> of the
-signal you’re measuring in your A/B test.</p>
-<p>Let’s do a quick simulation. We don’t need to have
-a realistic model, just something to drive our intuitions. We’ll make this
-really simple:</p>
+signal you’re measuring.</p>
+<p>Let’s do a quick simulation of the impact of these factors on
+ratings over time. We don’t need to have
+a realistic model for now, just a toy model to drive some intuitions. I’ll make this
+relatively simple:</p>
 <ul>
 <li>10,000 people purchase a pair of shoes.</li>
 <li>Shoes are either cheap or expensive. Assume the purchase mix is 50/50.</li>
@@ -112,6 +110,7 @@ the likelihood to rate doubles, and the
 likelihood to rate early increases to 75%.</li>
 <li>The early reviews might be what you see after running an experiment,
 while the later reviews might accumulate months later.</li>
+<li>There’s no need to simulate an A/B test for now, just the ratings over time.</li>
 </ul>
 <p>Here’s some R code to simulate this. (Don’t worry if you don’t read R!
 It just implements the above and makes a graph of three views of the average
@@ -162,19 +161,16 @@ ggplot(res1, aes(name, value, label=sprintf(&#39;%0.2f&#39;, value))) +
   labs(&quot;Simulation 1: Parameters in Text&quot;,
        x=&quot;Rating&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/sim1-1.png" width="672" /></p>
-<p>Even without fully simulating a realistic rating process and a realistic A/B
-test, and even without simulating uncertainty intervals, the
-process of writing this simulation and running the code has caused us to
-realize a few things:</p>
+<p>Here’s what I get out of these results, and thinking through the toy simulation.</p>
 <ul>
-<li>Ratings don’t reflect true satisfaction. In this toy simulation,
+<li><strong>Ratings don’t reflect true satisfaction.</strong> In this simulation,
 only 22% of buyers will rate at all,
 and only 13% will rate
 early enough to be observed during an experiment.</li>
 <li>If there are more people who are glowing than dissatisfied,
-and if having strong feelings makes you more likely to rate, then ratings will
-look more positive than the actual level of satisfaction.</li>
-<li>Early ratings will differ from late ratings. In this scenario early
+and if having strong feelings makes you more likely to rate, then
+<strong>ratings will look more positive than the actual level of satisfaction</strong>.</li>
+<li><strong>Early ratings will differ from late ratings</strong>. In this scenario early
 ratings are a bit
 lower, as they reflect the more negative experiences of people who bought
 more expensive shoes but were dissatisfied.</li>
@@ -197,7 +193,8 @@ to use the number of people expected to <em>rate</em> during the experiment, not
 the much larger number of people expected to <em>participate</em> in the experiment.</li>
 <li>Look at historical rating patterns. In your specific case, do ratings
 accumulated in the first week or two differ dramatically from the eventual
-ratings? The more that they do, the less valid metrics such as average
+ratings, as in this simulation?
+The more that they do, the less valid metrics such as average
 rating will be, and the more work you should put in to ensure you’re making
 the right decisions about the feature.</li>
 <li>An easy thing to do is simply to wait. If you can, run the experiment longer,
@@ -214,9 +211,11 @@ where you remind people to rate their purchases a week after they receive
 their shoes. That test could easily yield a change in average ratings. But
 it’s important to remember that the change happened <em>after</em> the purchase
 decision, meaning there’s no way that the intervention caused a change in
-satisfaction with their purchase!</li>
+satisfaction with their purchase! (It still is likely a good idea, though!)</li>
 </ul>
 <p>There are other issues that arise with
-A/B testing and ratings. What if users purchase more than one item? Are your
-statistical tests still valid? Come back soon for answers!</p>
+A/B testing and ratings. A fun one is: what happens if users purchase more
+than one item? Are your
+statistical tests on ratings still valid? Turns out they’re not!
+In my next post on this topic, I’ll explain and provide a workaround!</p>
 </div>
