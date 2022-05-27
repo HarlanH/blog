@@ -1,7 +1,7 @@
 ---
 title: 'Staff Data Scientist: Comments on Will Larson''s Staff Engineer Book'
 author: Harlan Harris
-date: '2022-05-31'
+date: '2022-05-27'
 slug: staff-data-scientist-comments-on-will-larson-s-staff-engineer-book
 categories:
   - professional
