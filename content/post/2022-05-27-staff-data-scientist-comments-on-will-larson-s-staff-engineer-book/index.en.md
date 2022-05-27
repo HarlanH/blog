@@ -42,11 +42,15 @@ Scientist (mostly focused on Search) at [Teachers Pay
 Teachers](https://www.teacherspayteachers.com/Careers), and some initial
 thoughts as Principal Data Scientist (mostly focused on Growth) at
 [Algolia](https://www.algolia.com/careers/), where I've been for the
-last month. I'm going to talk primarily about *insights*-focused data
+last month. (I'm going to talk primarily about *insights*-focused data
 scientists, what others have called [Type A
 (Analysis)](https://towardsdatascience.com/ode-to-the-type-a-data-scientist-78d11456019 "An Ode to the Type A Data Scientist").
 Data Scientists who mostly build machine learning systems have a very
-different role at this level.
+different role at this level.)
+
+Quotes are of Larson, unless otherwise specified.
+
+------------------------------------------------------------------------
 
 # Archetypes
 
@@ -66,8 +70,8 @@ different role at this level.
 > The **Right Hand** extends an executive's attention, borrowing their
 > scope and authority to operate particularly complex organization.
 
-As a data scientist, and particularly one who's used clustering to
-define [subtypes of Data
+As a data scientist, and particularly one who used clustering to define
+[subtypes of Data
 Scientists](https://www.oreilly.com/library/view/analyzing-the-analyzers/9781449368388/ "Analyzing the Analyzers (O'Reilly)")
 in the past, this warmed my heart. The types of work that I've done roll
 up well to versions of these clusters. At TPT, I was a co-lead of the
@@ -91,7 +95,7 @@ scientist could work closely with a CEO. One part of a CEO's role, I've
 heard described, is to [interpret external
 reality](https://hbr.org/2009/05/what-only-the-ceo-can-do "What Only the CEO Can Do (HBR)")
 to get the organization aligned on why they're doing what they do.
-Interpreting reality is very much what data scientists do.
+Interpreting reality is very much what data scientists do too.
 
 # What Staff-plus Data Scientists Do
 
@@ -123,17 +127,17 @@ tools from the data science toolkit.
 > tolerant of evolution over time. Effective data models are not even
 > slightly clever.
 
-For software engineers, data models are how the *software* represents
-the world that the organization and the software's users care about.
-It's critical to get right. For data scientists, we also care about
-representing the world, and we can be an important voice in ensuring
-that the work that we (and analysts, and business intelligence
-engineers, etc.) do actually approximates the real world well. At the
-staff-plus level, we should have both the business context and the
-technical skills to help the organization be better at measuring,
-finding insights, and making decisions that reflect the complexity of
-the world, while working around problems in the systems that provide our
-data.
+Ooh, data! For software engineers, data models are how the *software*
+represents the world that the organization and the software's users care
+about. It's critical to get right. For data scientists, we also care
+about representing the world, and we can be an important voice in
+ensuring that the data we use and the work that we (and analysts, and
+business intelligence engineers, etc.) do actually approximates the real
+world well. At the staff-plus level, we should have both the business
+context and the technical skills to help the organization be better at
+measuring, finding insights, and making decisions that reflect the
+complexity of the world, while working around problems in the systems
+that provide our data.
 
 > (p. 192) \[From an interview with Katie Sylor-Miller at Etsy\]
 >
@@ -146,10 +150,10 @@ data.
 In [classic management
 texts](https://www.goodreads.com/book/show/324750.High_Output_Management "High Output Management"),
 managers are urged to find the highest-leverage thing that they can do,
-and delegate the rest. The same applies to senior ICs. Although I spend
-a lot less time in meetings than I did when I was a manager, I spend
-more time writing documentation and processes, or helping others
-up-skill, or proposing projects.
+and delegate the rest. The same applies to Staff-plus ICs. Although I
+spend a lot less time in meetings than I did when I was a manager, I
+spend more time writing documentation and processes, or helping others
+up-skill, or researching problems and proposing projects.
 
 > (p. 195) \[More from Katie Sylor-Miller\]
 >
@@ -162,7 +166,7 @@ up-skill, or proposing projects.
 > different areas makes it easier for me to see the broader impact of my
 > technical decisions and understand those tradeoffs better.
 
-Yes, and related, I tend to think that an effective data scientist
+Yes, and related -- I tend to think that an effective data scientist
 working in the product organization at a tech company should be able to
 operate as a software engineer a couple of levels lower. So if a Staff
 Data Scientist is a "level 5" role (which it often is), then someone
@@ -287,8 +291,9 @@ development, marketing, and other divisions.
 
 A thing I've appreciated about becoming more senior is that you get more
 of an opportunity to define your role, and define what success should
-look like. Part of that is helping to define what successful data
-science at your organization would mean, in the future.
+look like. Part of that is working with management to write job
+descriptions, and part of it is helping to define what successful data
+science at your organization means.
 
 > (p. 171) \[Still from Ras Kasa Williams\]
 >
