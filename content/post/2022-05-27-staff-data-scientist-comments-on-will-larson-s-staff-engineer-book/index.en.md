@@ -22,6 +22,9 @@ showRelatedInArticle: no
 editor_options: 
   markdown: 
     wrap: 72
+_build:
+  render: true
+  list: false
 ---
 
 I recently read Will Larson's excellent book [Staff Engineer: Leadership

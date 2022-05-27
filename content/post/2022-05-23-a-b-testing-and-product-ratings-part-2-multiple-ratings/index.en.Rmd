@@ -24,6 +24,9 @@ codeMaxLines: 10
 codeLineNumbers: no
 figurePositionShow: yes
 showRelatedInArticle: no
+_build:
+  render: false
+  list: false
 ---
 
 Second, your A/B test split *users*, but you're measuring *ratings*,
