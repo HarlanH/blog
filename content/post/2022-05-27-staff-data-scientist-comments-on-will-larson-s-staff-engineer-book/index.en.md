@@ -22,9 +22,6 @@ showRelatedInArticle: no
 editor_options: 
   markdown: 
     wrap: 72
-_build:
-  render: true
-  list: false
 ---
 
 I recently read Will Larson's excellent book [Staff Engineer: Leadership
@@ -261,10 +258,10 @@ create impact from a project.
 
 At the Staff-plus level, data scientists should have a broad enough
 context to identify and prioritize what needs to change, and a broad
-enought set of skills (soft and technical) to actually push things
-forward. This could mean writing a memo to senior management, or it
-could mean writing a technical spec to an audience of software
-engineers.
+enough set of skills (soft and technical) to actually push things
+forward. This could mean writing a memo to senior management, supported
+by statistical analyses, or it could mean writing a technical spec to an
+audience of software engineers.
 
 > (p. 168) \[In an interview with Ras Kasa Wililams, Staff Engineer at
 > Mailchimp.\]
