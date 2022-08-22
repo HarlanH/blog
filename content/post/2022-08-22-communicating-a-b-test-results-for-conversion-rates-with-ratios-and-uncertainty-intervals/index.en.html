@@ -52,7 +52,7 @@ present those results.</p>
 might get
 when you type “A/B test calculator” into a web search engine,
 you <a href="https://abtestguide.com/calc/?ua=100000&amp;ub=100000&amp;ca=15000&amp;cb=15400&amp;tail=2">get</a> the 2.7% relative
-ratio (<span class="math inline">\(\frac{15400-15000}{15000\)</span>}), but everything else is (in my view) a
+ratio (<span class="math inline">\(\frac{15400-15000}{15000}\)</span>), but everything else is (in my view) a
 confusing mess:</p>
 <div class="figure">
 <img src="images/abtestguide.png" alt="" />
@@ -201,7 +201,7 @@ round(summary(AB1,
               credInt=rep(0.95, length(AB1$posteriors)))$interval$Probability * 100,
       3)</code></pre>
 <pre><code>##  2.5% 97.5% 
-## 0.562 4.796</code></pre>
+## 0.562 4.820</code></pre>
 <p>Because the number of observations is high, and our prior is relatively broad,
 this is essentially the same interval as we computed above. So we’re justified
 in the hand-waving that makes communications with business people much, much

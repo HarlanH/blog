@@ -53,7 +53,7 @@ At [AB Testguide](https://abtestguide.com/calc/), a web calculator you
 might get
 when you type "A/B test calculator" into a web search engine,
 you [get](https://abtestguide.com/calc/?ua=100000&ub=100000&ca=15000&cb=15400&tail=2) the 2.7% relative
-ratio ($\frac{15400-15000}{15000$}), but everything else is (in my view) a
+ratio ($\frac{15400-15000}{15000}$), but everything else is (in my view) a
 confusing mess:
 
 ![Figure 1: Results from AB Testguide web site.](images/abtestguide.png)
