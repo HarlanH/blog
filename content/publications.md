@@ -18,7 +18,9 @@ showReadTime = false
 
 ## Public Presentations
 
-[A/B Testing and Decision-Making](https://docs.google.com/presentation/d/1hjmTQi46cF4BvyqFOY5qhMJ_-zicma1ZXsxryHrdum8/edit?usp=sharing). (2022) [Quant UX Conf 2022](https://www.quantuxcon.com/home).
+[Panel: Staff+ IC Data Careers](https://www.youtube.com/watch?v=Y79D1mZPO7w). (2022) Locally Optimistic Meetup. With Paige Berry and Terry Joyce.
+
+[A/B Testing and Decision-Making](https://drive.google.com/file/d/1ek72z8iUygs-3O8-Q2ktrKlgoQ-HbRMr/view?usp=sharing). (2022) [Quant UX Conf 2022](https://www.quantuxcon.com/home).
 
 [The Software Architecture of WayUp's Job Recommender System](https://docs.google.com/presentation/d/1AOlQj1IiBj0CUjk2750IJIDZhCFcB3LI9EYSZFlLmLo/edit?usp=sharing). (2018) [DataEngConf NYC 2018](https://www.dataengconf.com/speaker/the-software-architecture-of-wayups-job-recommender-system?hsLang=en-us).
 
