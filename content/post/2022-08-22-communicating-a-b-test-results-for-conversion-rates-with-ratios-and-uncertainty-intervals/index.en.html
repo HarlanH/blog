@@ -17,7 +17,7 @@ featured: yes
 draft: no
 toc: no
 usePageBundles: no
-featureImage: /images/00007b.png
+featureImage: /communicating-a-b-test-results-for-conversion-rates-with-ratios-and-uncertainty-intervals/images/00007b.png
 featureImageAlt: Graph showing interval of 1.3% to 6.7%.
 featureImageCap: null
 codeMaxLines: 20
@@ -59,7 +59,7 @@ ratio (<span class="math inline">\(\frac{15400-15000}{15000\)</span>}), but ever
 confusing mess:</p>
 <div class="figure">
 <img src="images/abtestguide.png" alt="" />
-<p class="caption">Results from AB Testguide web site</p>
+<p class="caption">Figure 1: Results from AB Testguide web site.</p>
 </div>
 <ul>
 <li>The bottom-line box up top is nice, but it shows unlabeled uncertainty intervals,
@@ -81,6 +81,18 @@ blinding you with science.</li>
 <p>Speaking of R, let’s look at how its built-in <code>prop.test</code> function
 presents the results. This is a standard tool for statisticians. It’s one
 line of code from a standard library:</p>
+<pre class="r"><code>prop.test(c(15400, 15000), c(100000, 100000))</code></pre>
+<pre><code>## 
+##  2-sample test for equality of proportions with continuity correction
+## 
+## data:  c(15400, 15000) out of c(1e+05, 1e+05)
+## X-squared = 6.1756, df = 1, p-value = 0.01295
+## alternative hypothesis: two.sided
+## 95 percent confidence interval:
+##  0.0008431498 0.0071568502
+## sample estimates:
+## prop 1 prop 2 
+##  0.154  0.150</code></pre>
 <p>This output gives you what you’d need to format your results for an academic
 paper. You might say: “The test increased the conversion rate significantly
 (<span class="math inline">\(\Chi^2(1)=6.18, p=0.01\)</span>).” That’s not really going to help you talk
@@ -97,7 +109,7 @@ for this A/B/C (two tests vs. one control) test from
 <a href="https://docs.developers.optimizely.com/experimentation/v4.0.0-full-stack/docs/analyze-results">their documentation</a>:</p>
 <div class="figure">
 <img src="images/optimizely.png" alt="" />
-<p class="caption">Example of Optimizely’s user interface on test results</p>
+<p class="caption">Figure 2: Example of Optimizely’s user interface on test results.</p>
 </div>
 <ul>
 <li>They do a nice job of showing the number of visitors, the conversion
@@ -129,11 +141,45 @@ binomial distribution) has an <a href="https://en.wikipedia.org/wiki/Binomial_di
 The R code below computes the 95th percentile range of that distribution,
 representing the uncertainty interval. (The “very likely” above is a bit
 of hand-waving to communicate this to a non-statistician. More on that below.)</p>
+<pre class="r"><code>cr_ratio &lt;- function(a_ct, b_ct, a_conv, b_conv, 
+                     percentiles=c(0.025, .5, 0.975),
+                     as_percents = TRUE) {
+  a_prop = a_conv / a_ct
+  b_prop = b_conv / b_ct
+  m = log(b_prop / a_prop)
+  v = ((1 / a_prop) - 1) / a_ct + ((1 / b_prop) - 1) / b_ct
+  ret = exp(qnorm(percentiles, mean=m, sd=sqrt(v)))
+  if (as_percents) ret &lt;- 100 * (ret - 1)
+  names(ret) = percentiles * 100
+  ret
+}
+
+cr_ratio(100000, 100000, 15000, 15400)</code></pre>
+<pre><code>##       2.5        50      97.5 
+## 0.5627688 2.6666667 4.8145807</code></pre>
 <p>Removing insignificant digits and rounding appropriately,
 this yields the 0.6% to 4.8% range and the point estimate.</p>
 <p>You can, with a bit of effort, create visualizations that get at the most
 important things to communicate: the uncertainty interval, and the “no impact”
 baseline:</p>
+<pre class="r"><code>df &lt;- as_tibble(t(cr_ratio(100000, 100000, 15000, 15400, as_percents=FALSE)))
+names(df) &lt;- c(&#39;min&#39;, &#39;pt&#39;, &#39;max&#39;)
+df$x &lt;- 1
+labels &lt;- tribble(
+  ~x, ~y, ~txt,
+  &quot;purchase rate&quot;, df$min, scales::percent(df$min-1, .1),
+  &quot;purchase rate&quot;, df$max, scales::percent(df$max-1, .1)
+) 
+ggplot(df, aes(x, ymin=min, y=pt, ymax=max)) +
+  geom_crossbar(width=.2) +
+  geom_text(data=labels, mapping=aes(x=x, y=y, ymin=NULL, ymax=NULL, label=txt),
+            nudge_x=.2) +
+  geom_hline(yintercept=1, color=&#39;blue&#39;) +
+  scale_x_discrete(&quot;&quot;) +
+  scale_y_continuous(&quot;B/A Ratio&quot;, labels=scales::percent, limits=c(.92, 1.08)) +
+  coord_flip() +
+  theme_minimal()</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/ratioplot-1.png" width="480" /></p>
 <p>This display is handy to standardize, as you can show multiple different
 conversion rates on the same graph, giving clear context to the results of the
 experiment.</p>
@@ -148,6 +194,17 @@ the above as if they were Bayesian, and describe them the “wrong way”, as if
 they were saying something about the beliefs you should have about the true
 values. Here’s an illustration, generating the Bayesian credible interval
 on the posterior distribution:</p>
+<pre class="r"><code>#plotBeta(15,85) # we think CR is around 15%
+AB1 &lt;- bayesAB::bayesTest(
+                 c(rep.int(1, 15400), rep.int(0, 100000-15400)),
+                 c(rep.int(1, 15000), rep.int(0, 100000-15000)),
+                 priors = c(&#39;alpha&#39; = 15, &#39;beta&#39; = 85), 
+                 n_samples = 1e5, distribution = &#39;bernoulli&#39;)
+round(summary(AB1, 
+              credInt=rep(0.95, length(AB1$posteriors)))$interval$Probability * 100,
+      3)</code></pre>
+<pre><code>##  2.5% 97.5% 
+## 0.569 4.813</code></pre>
 <p>Because the number of observations is high, and our prior is relatively broad,
 this is essentially the same interval as we computed above. So we’re justified
 in the hand-waving that makes communications with business people much, much

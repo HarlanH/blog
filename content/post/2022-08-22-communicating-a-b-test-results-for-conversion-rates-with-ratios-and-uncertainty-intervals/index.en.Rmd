@@ -17,7 +17,7 @@ featured: yes
 draft: no
 toc: no
 usePageBundles: no
-featureImage: /images/00007b.png
+featureImage: /communicating-a-b-test-results-for-conversion-rates-with-ratios-and-uncertainty-intervals/images/00007b.png
 featureImageAlt: Graph showing interval of 1.3% to 6.7%.
 featureImageCap: null
 codeMaxLines: 20
@@ -59,7 +59,7 @@ you [get](https://abtestguide.com/calc/?ua=100000&ub=100000&ca=15000&cb=15400&ta
 ratio ($\frac{15400-15000}{15000$}), but everything else is (in my view) a
 confusing mess:
 
-![Results from AB Testguide web site](images/abtestguide.png)
+![Figure 1: Results from AB Testguide web site.](images/abtestguide.png)
 
 * The bottom-line box up top is nice, but it shows unlabeled uncertainty intervals,
 so you can't really tell how uncertain each conversion rate is. (As an aside,
@@ -84,8 +84,7 @@ line of code from a standard library:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
 	message = FALSE,
-	warning = FALSE,
-	include = FALSE
+	warning = FALSE
 )
 library(tidyverse)
 library(bayesAB)
@@ -111,7 +110,7 @@ ad-blockers. But I don't love their presentation of results, such as
 for this A/B/C (two tests vs. one control) test from
 [their documentation](https://docs.developers.optimizely.com/experimentation/v4.0.0-full-stack/docs/analyze-results):
 
-![Example of Optimizely's user interface on test results](images/optimizely.png)
+![Figure 2: Example of Optimizely's user interface on test results.](images/optimizely.png)
 
 * They do a nice job of showing the number of visitors, the conversion
 rate, and the _relative_ improvement (in this case, negative).
