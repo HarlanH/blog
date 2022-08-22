@@ -107,7 +107,7 @@ ad-blockers. But I don't love their presentation of results, such as
 for this A/B/C (two tests vs. one control) test from
 [their documentation](https://docs.developers.optimizely.com/experimentation/v4.0.0-full-stack/docs/analyze-results):
 
-![Figure 2: Example of Optimizely's user interface on test results.](images/optimizely.png)
+![Figure 2: Example of Optimizely's user interface on test results.](images/optly.png)
 
 * They do a nice job of showing the number of visitors, the conversion
 rate, and the _relative_ improvement (in this case, negative).

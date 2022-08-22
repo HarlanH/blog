@@ -37,6 +37,8 @@ home = ["HTML", "RSS", "JSON"]
 
 [params]
 
+enforceLightMode = true
+
 # enable search
 enableSearch = true
 
