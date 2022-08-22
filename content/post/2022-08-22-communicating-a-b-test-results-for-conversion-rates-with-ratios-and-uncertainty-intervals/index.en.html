@@ -16,10 +16,7 @@ description: "Critiques some standard presentations of results from conversion r
 featured: yes
 draft: no
 toc: no
-usePageBundles: no
-featureImage: /communicating-a-b-test-results-for-conversion-rates-with-ratios-and-uncertainty-intervals/images/00007b.png
-featureImageAlt: Graph showing interval of 1.3% to 6.7%.
-featureImageCap: null
+usePageBundles: yes
 codeMaxLines: 20
 codeLineNumbers: no
 figurePositionShow: yes
@@ -204,7 +201,7 @@ round(summary(AB1,
               credInt=rep(0.95, length(AB1$posteriors)))$interval$Probability * 100,
       3)</code></pre>
 <pre><code>##  2.5% 97.5% 
-## 0.569 4.813</code></pre>
+## 0.568 4.817</code></pre>
 <p>Because the number of observations is high, and our prior is relatively broad,
 this is essentially the same interval as we computed above. So we’re justified
 in the hand-waving that makes communications with business people much, much

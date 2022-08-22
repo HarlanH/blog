@@ -16,10 +16,7 @@ description: "Critiques some standard presentations of results from conversion r
 featured: yes
 draft: no
 toc: no
-usePageBundles: no
-featureImage: /communicating-a-b-test-results-for-conversion-rates-with-ratios-and-uncertainty-intervals/images/00007b.png
-featureImageAlt: Graph showing interval of 1.3% to 6.7%.
-featureImageCap: null
+usePageBundles: yes
 codeMaxLines: 20
 codeLineNumbers: no
 figurePositionShow: yes
