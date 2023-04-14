@@ -1,0 +1,208 @@
+---
+title: 'A/B Testing and Product Ratings, Part 2: Multiple Ratings'
+author: Harlan Harris
+date: '2022-06-10'
+slug: 'a-b-testing-and-product-ratings-part-2-multiple-ratings'
+categories:
+  - professional
+tags:
+  - data science
+  - analytics
+  - business
+  - statistics
+  - a/b testing
+description: Article description.
+featured: yes
+toc: no
+usePageBundles: no
+featureImage: /images/path/file.jpg
+featureImageAlt: Description of image
+featureImageCap: This is the featured image.
+thumbnail: /images/path/thumbnail.png
+shareImage: /images/path/share.png
+codeMaxLines: 10
+codeLineNumbers: no
+figurePositionShow: yes
+showRelatedInArticle: no
+_build:
+  render: false
+  list: false
+---
+
+In my [previous post]() on A/B testing and ratings on a shoes e-retailer site, 
+I talked about some of the
+challenges that arise because ratings are _delayed_ and _biased_ estimates of
+sentiment. But there's another problem. 
+Your A/B test split *users*, but you're measuring *ratings*,
+which are per-item. Some customers will buy multiple pairs of shoes, and
+most likely will either rate all of them or none of them. Does this fact
+affect how confident you can be at the end of the experiment?
+
+```{r setup}
+library(tidyverse)
+```
+
+# Randomization Unit Mis-Match
+
+A/B tests are essentially always split at the user level, but ratings are per-item. Because of this,
+the following facts cause a potentially big problem:
+
+1. Some users purchase more than one item at a time.
+2. For users who purchase more than one item, the decision to rate
+or not is usually all-or-nothing.
+3. Some users are more generally positive and some users are more critical in their reviews.
+
+Because of these facts, and because the feature change we’re A/B testing 
+affects users, not individual items, _ratings by the same user are likely to be correlated_. 
+But the standard ways of estimating uncertainty in an A/B test require that measurements
+be [IID](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables), 
+and ratings by the same user are definitely not independent.
+
+To explore this issue, let's generate some toy data. Suppose our A/B test 
+had 5,000 users per group, each user purchased either one or two pairs of shoes,
+and each user has (in the A group) either a 50% or 75% percent likelihood of saying they were
+happy with each of their purchases. (We're simplying by assuming that everybody
+purchases, everybody rates all of their purchases, and that ratings are good/bad
+instead of a 1-5 star scale.) In the B group, the happiness likelihoods are
+55% and 80%, reflecting a better experience.
+
+The simulated data looks like this:
+
+```{r dat}
+total_users = 10000
+
+dat_raw <- tibble(
+  user_id = 1:total_users,
+  variant = rep(c('A', 'A', 'A', 'A', 'B', 'B', 'B', 'B'), total_users/8),
+  pairs_purchased = rep(c(1, 2, 1, 2, 1, 2, 1, 2), total_users/8),
+  prob_happy = rep(c(.5, .5, .75, .75, .5, .5, .75, .75), total_users/8) +
+    ifelse(variant == 'B', .05, 0)
+) %>% 
+  uncount(weights=pairs_purchased, .remove=FALSE, .id='purchase_num') %>%
+  mutate(rating = as.integer(rbernoulli(length(prob_happy), p=prob_happy)))
+
+head(dat_raw, 10)
+```
+
+
+# Option 0: Compute an Invalid Interval
+
+The naive thing to do is to ignore the multiple-purchases issue, and the 
+randomization unit mis-match, and just compute the ratio of good reviews in the
+A and B groups, along with an uncertainty interval.
+
+For reasons that will be clear in a moment, instead of using a closed-form
+method of computing the interval, I'll use the statistical 
+[bootstrap]() instead. 
+
+```{r boot}
+# by is either "rating" or "user"
+boot1 <- function(dd, by='rating') {
+    # sample with replacement
+    dd_samp <- if (by == 'rating') {
+        slice_sample(dd, n=nrow(dd), replace=TRUE)
+    } else {
+        # sample user_ids with replacement
+        # inner join to the df to get correct duplicated rows
+        distinct_user_ids <- unique(dd$user_id)
+        sample_user_ids <- sample(distinct_user_ids, length(distinct_user_ids), replace=TRUE)
+        dd %>% inner_join(tibble(user_id = sample_user_ids), by='user_id')
+    }
+    
+    # calculate the raw ratio
+    a_ratings = dd_samp[['rating']][dd_samp['variant'] == 'A']
+    b_ratings = dd_samp[['rating']][dd_samp['variant'] == 'B']
+
+    n_a = length(a_ratings)
+    n_b = length(b_ratings)
+    p_a = sum(a_ratings) / n_a
+    p_b = sum(b_ratings) / n_b
+    p_b / p_a
+}
+```
+
+```{r opt0}
+# compute a bootstrap estimate, using rating as the sample unit
+n = 2000
+ratios = map_dbl(1:n, ~ boot1(dat_raw))
+rating_boot <- quantile(ratios, c(.025, .5, .975)) 
+res_df <- tibble(Method='Per-Rating (Mismatched)', lb=rating_boot[[1]], med=rating_boot[[2]], ub=rating_boot[[3]])
+
+```
+
+```{r res_opt0}
+res_df
+```
+
+Because of the randomization unit mis-match, and the fact that we ignored the
+correlation within users, although the point estimate is correct, the lower
+and upper bounds are not, as we'll see.
+
+## Option 1: Avoid the Mis-Match by Computing Per-User Average Rating
+
+In some situations, there might not actually be a big problem. 
+If what you care about is how
+much a feature change affects _purchaser sentiment_, then all you need to do is estimate
+that sentiment by aggregating ratings from each user, ignoring the number of 
+shoes purchased.
+
+```{r setup_opt1}
+dat_raw %>%
+  group_by(user_id, variant) %>%
+  summarize(rating=mean(rating), .groups='drop_last') %>%
+  ungroup() -> dat_per_user
+
+head(dat_per_user, 10)
+```
+
+Now there are some users with intermediate values for their rating, but that 
+doesn't affect our computation of the ratio.
+
+```{r opt1}
+# compute a bootstrap estimate, using user as the sample unit, with 
+# aggregated data
+ratios = map_dbl(1:n, ~ boot1(dat_per_user))
+rating_boot <- quantile(ratios, c(.025, .5, .975)) 
+res_df <- bind_rows(res_df, 
+                    tibble(Method='Per-User', lb=rating_boot[[1]], med=rating_boot[[2]], ub=rating_boot[[3]]))
+
+```
+
+```{r res_opt1}
+res_df
+```
+
+## Option 2: Fix the Statistic
+
+TODO: if you care about perception by prospective buyers more than satisfaction
+by past buyers, need to look at per-rating, not per-buyer. So, although the ratio
+is correct, the UI is wrong because of the correlation.
+
+Almost any process you use to calculate uncertainty, including those provided
+by _all_ on-line A/B test calculators,
+will be too narrow, meaning that using those estimates will provide 
+overly-confident levels of certainty, 
+likely causing incorrect decisions to be made or learnings to be taken!
+
+To solve this problem, we need to switch from closed-form estimates of uncertainty to bootstrap estimates. 
+And, instead of sampling from ratings, we should instead sample from users. So, if user X in bucket A rated 3 items, 
+the bootstrap samples would have 0, 3, or 6 (or potentially more) ratings from that user. Intuitively, sampling by 
+users will increase the variance of the bootstrap samples, which is what we need to happen. 
+
+Standard bootstrap packages don’t support this method of sampling, but fortunately it’s relatively easy to code. 
+```{r opt2}
+# compute a bootstrap estimate, using user as the sample unit
+ratios = map_dbl(1:n, ~ boot1(dat_raw, by='user'))
+rating_boot <- quantile(ratios, c(.025, .5, .975)) 
+res_df <- bind_rows(res_df, 
+                    tibble(Method='Per-Rating (Corrected)', lb=rating_boot[[1]], med=rating_boot[[2]], ub=rating_boot[[3]]))
+```
+
+```{r res_opt2}
+res_df
+```
+
+TODO:  whhhyyy is this the same? 
+
+
+
