@@ -201,7 +201,7 @@ direction.
 Completely true. If you have to mention _p_ values in a report, it's much
 better to say _p_ < 0.05 than _p_ = 0.0034 or whatever, which will cause
 stakeholders to say wince-worthy things like "very statistically significant."
-Statistical significance (or, better, "reliability") just means that you've 
+The misnomer "statistical significance"" just means that you've 
 crossed a threshold that leads to a particular decision. You've pre-determined
 the importance of the result, and you explicitly do not care, for a Superiority
 Decision, how big the effect size is.
