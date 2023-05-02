@@ -11,7 +11,6 @@ tags:
   - data science
 description: Argues that for Superiority Decisions, classical NHST turns out to be a reasonable approach, despite the ASA statement criticizing p values.
 featured: yes
-draft: yes
 toc: no
 usePageBundles: no
 codeMaxLines: 10
