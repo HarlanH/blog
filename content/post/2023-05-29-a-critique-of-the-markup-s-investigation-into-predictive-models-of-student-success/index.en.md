@@ -19,7 +19,7 @@ featured: no
 draft: no
 toc: no
 usePageBundles: no
-featureImage: classroom.jpg
+featureImage: images/classroom.jpg
 featureImageAlt: empty classroom
 figurePositionShow: yes
 showRelatedInArticle: no
