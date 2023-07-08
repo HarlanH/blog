@@ -85,14 +85,15 @@ follow, I describe <em>when</em> each decision is used, <em>appropriate</em> sce
 this decision, how to <em>plan</em> for the experiment, and how to actually
 <em>make the decision</em>, once the data is in. Then, I provide some technical notes
 about the statistical approaches used in the planning and decision-making.</p>
-<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/plot-1.png" width="768" />
-<em>Perhaps-useful intuitions for the five types of decisions.</em></p>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/plot-1.png" width="768" /></p>
+<p><em>Figure: Perhaps-useful intuitions for the five types of decisions.</em></p>
 <div id="superiority-decision" class="section level2">
 <h2>Superiority Decision</h2>
 <ul>
 <li><em>Used When</em>: You only want to roll out the New Experience if it is <em>almost certainly better</em> than the Control.</li>
 <li><em>Appropriate for</em>: Changes that would be costly to fully implement and maintain, that would make your systems more complex. It’s a conservative test!</li>
-<li><em>Planning</em>: Run the test until you’re _quite likely to detect the <em>smallest positive impact</em> on the key metric that would cause a roll-out decision.</li>
+<li><em>Planning</em>: Run the test until you’re <em>quite likely</em> to detect the
+<em>smallest positive impact</em> on the key metric that would cause a roll-out decision.</li>
 <li><em>Decision</em>: Statistics say the New Experience is <em>almost certainly</em> better.</li>
 </ul>
 <p>These are intuitions that data scientists, product managers, and others can
@@ -156,8 +157,8 @@ reasonably confident (“likely” vs. “very likely”) is adequate. You also
 care about the magnitude of the effect, you just want to be pretty sure you’re
 making the right decision (i.e., the estimated <em>sign</em> of the effect is correct,
 see <a href="https://journals.sagepub.com/doi/10.1177/1745691614551642">Gelman &amp; Carlin, 2014</a>
-and <a href="https://www.aeaweb.org/articles?id=10.1257/jep.35.3.157">Inmbens, 2021</a>).<br />
-By simulating many experiments, with effect sizes drawn from the prior
+and <a href="https://www.aeaweb.org/articles?id=10.1257/jep.35.3.157">Inmbens, 2021</a>).</p>
+<p>By simulating many experiments, with effect sizes drawn from the prior
 distribution, and a range of experiment durations, you can identify how long
 you’d need to run the experiments to get <em>most</em> of the decisions (say, 80%) right.
 Then, there’s no need for a statistical test to be run at all once the experiment
