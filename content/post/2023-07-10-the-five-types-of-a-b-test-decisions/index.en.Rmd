@@ -163,13 +163,15 @@ agnostic,
 measurement,
 lean_startup, nrow=2)
 ```
-_Perhaps-useful intuitions for the five types of decisions._
+
+_Figure: Perhaps-useful intuitions for the five types of decisions._
 
 ## Superiority Decision
 
 * *Used When*: You only want to roll out the New Experience if it is _almost certainly better_ than the Control.
 * *Appropriate for*: Changes that would be costly to fully implement and maintain, that would make your systems more complex. It’s a conservative test!
-* *Planning*: Run the test until you’re _quite likely to detect the _smallest positive impact_ on the key metric that would cause a roll-out decision.
+* *Planning*: Run the test until you’re _quite likely_ to detect the 
+_smallest positive impact_ on the key metric that would cause a roll-out decision.
 * *Decision*: Statistics say the New Experience is _almost certainly_ better.
 
 These are intuitions that data scientists, product managers, and others can 
@@ -236,7 +238,8 @@ reasonably confident ("likely" vs. "very likely") is adequate. You also don't
 care about the magnitude of the effect, you just want to be pretty sure you're 
 making the right decision (i.e., the estimated _sign_ of the effect is correct, 
 see [Gelman & Carlin, 2014](https://journals.sagepub.com/doi/10.1177/1745691614551642)
-and [Inmbens, 2021](https://www.aeaweb.org/articles?id=10.1257/jep.35.3.157)).  
+and [Inmbens, 2021](https://www.aeaweb.org/articles?id=10.1257/jep.35.3.157)).
+
 By simulating many experiments, with effect sizes drawn from the prior 
 distribution, and a range of experiment durations, you can identify how long 
 you’d need to run the experiments to get _most_ of the decisions (say, 80%) right. 
