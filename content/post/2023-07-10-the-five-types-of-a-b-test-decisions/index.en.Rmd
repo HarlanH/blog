@@ -1,7 +1,7 @@
 ---
 title: The Five Types of A/B Test Decisions
 author: Harlan Harris
-date: '2023-07-10'
+date: '2023-07-07'
 slug: the-five-types-of-a-b-test-decisions
 categories:
   - professional
