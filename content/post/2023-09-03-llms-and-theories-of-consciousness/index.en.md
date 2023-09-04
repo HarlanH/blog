@@ -13,7 +13,7 @@ description: |
   A speculative method for adding rudamentary consciousness to LLMs,
   leveraging the work of two prominent cognitive scientists.
 featured: yes
-draft: yes
+draft: no
 toc: no
 usePageBundles: no
 codeMaxLines: 10
