@@ -122,13 +122,13 @@ something like:
   + What would a CIAHKAHH feel about the global workspace below?
   + What goals would a CIAHKAHH have, given the global workspace below?
 * External prompts might get prefixed with the most recent responses to these questions: 
-  + You are a CIAHKAHH with the following recent history: <global workspace>. 
+  + You are a CIAHKAHH with the following recent history: [global workspace]. 
   You have been asked the following question by human X. 
-  Please respond accordingly. <prompt>
+  Please respond accordingly. [prompt]
 * The result would be summarized before being added to the list:
-  + You are a CIAHKAHH with the following recent history. <global workspace> 
+  + You are a CIAHKAHH with the following recent history. [global workspace] 
   Please summarize the below prompt and response into a two sentence summary 
-  to be added to your recent history. X prompts: <prompt> You responded: <response>
+  to be added to your recent history. X prompts: [prompt] You responded: [response]
 
 The _unified agency_ is maintained by the mix of hard-coded goals in the 
 standard prompts, and dynamic goals maintained in the global workspace. 
