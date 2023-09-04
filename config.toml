@@ -72,7 +72,7 @@ bitbucket = "" # Your Bitbucket profile ID
 linkedin = "harlanharris" # Your LinkedIn profile ID (from public URL)
 googleplus = "" # Your Google+ profile ID
 facebook = "" # Your Facebook profile ID
-twitter = "HarlanH" # Your Twitter profile ID
+twitter = "" # Your Twitter profile ID
 youtube = ""  # Your Youtube channel ID
 flattr = ""  # populate with your flattr uid
 
@@ -118,12 +118,6 @@ since = 2009
   type = "social"
   weight = 4
   url = "https://github.com/HarlanH"
-[[menu.social]]
-    name = "Twitter"
-    type = "social"
-    url = "https://twitter.com/HarlanH"
-    weight = 4
-    pre = "<i class='fa fa-twitter'></i>"
 [[menu.social]]
     name = "LinkedIn"
     url = "https://www.linkedin.com/in/harlanharris/"
