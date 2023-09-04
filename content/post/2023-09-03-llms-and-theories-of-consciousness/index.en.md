@@ -137,7 +137,7 @@ experience, and thus different but unified agency.
 _Stimulus-independent processing_, the periodic self-referential queries of 
 the global workspace, is key to making this all (I suspect) work reasonably coherently.
 
-![Proposed LLM-based perhaps-conscious architecture](LLMs and Theories of Consciousness.png)
+![Proposed LLM-based perhaps-conscious architecture](consciousllmdiagram.png)
 
 Are there independent reasons for having a consciousness system like this? 
 That is, would consciousness be _adaptive_ for an intelligent system like a 
