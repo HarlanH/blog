@@ -16,6 +16,8 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
 # "yaml", "toml", "json"
 metaDataFormat = "toml"
 
+ignoreErrors = ["error-remote-getjson"]
+
 [permalinks]
 post = "/:year/:month/:slug/"
 code = "/:filename/"
