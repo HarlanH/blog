@@ -4,11 +4,7 @@
 <html lang="{{ .Lang }}" data-figures="{{ $p.figurePositionShow }}"{{ if .IsPage }} class="page"{{ end }}{{ if .IsHome }} class="home"{{ end }}{{ with $s.enforceLightMode }} data-mode="lit"{{ end }}{{ with $s.enforceDarkMode }} data-mode="dim"{{ end }}>
   <head>
     {{- partial "head" . }}
-    <!-- styles definition-->
-    {{- $options := (dict "targetPath" "css/styles.css" "outputStyle" "compressed" "enableSourceMap" "true") -}}
-    {{- $mainSassFile :=  "sass/main.sass" -}}
-    {{- $sass := resources.Get $mainSassFile | resources.ExecuteAsTemplate $mainSassFile . | css.Sass $options -}}
-    {{- $styles := $sass | resources.Fingerprint "sha512" -}}
+    <!-- styles definition (static CSS for compatibility across Hugo versions) -->
 
     <!-- scripts definition -->
     {{- $highlightPath := "js/highlight.js" }}
@@ -35,13 +31,9 @@
     {{- $bundlePath := (printf "%s/js/bundle.js" .Lang ) }}
     {{- $bundle := slice $highlight $variables $functions $code $main $custom | resources.Concat $bundlePath | resources.Fingerprint "sha512" -}}
 
-    <!-- preload assets declaration -->
-    <link rel="preload" href="{{ $styles.Permalink }}" integrity = "{{ $styles.Data.Integrity }}" as="style" crossorigin="anonymous">
-    <link rel="preload" href="{{ $bundle.Permalink }}" as="script" integrity=
-    "{{ $bundle.Data.Integrity }}" crossorigin="anonymous">
-
-    <!-- styles file -->
-    <link rel="stylesheet" type="text/css" href="{{ $styles.Permalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous">
+    <!-- styles files (served from static/css) -->
+    <link rel="stylesheet" type="text/css" href="{{ "css/style.css" | relURL }}">
+    <link rel="stylesheet" type="text/css" href="{{ "css/style_custom.css" | relURL }}">
     {{- with $s.customCSS }}
     {{- range . -}}
 	  <link rel="stylesheet" href="{{ relURL . }}">
