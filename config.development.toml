@@ -1,0 +1,14 @@
+# Local development overrides
+# This file is merged with config.toml when running Hugo locally.
+
+baseurl = "http://localhost:1313/"
+
+# Optional: silence noisy X shortcode network warnings in dev
+ignoreLogs = ["shortcode-x-getremote"]
+
+[params]
+  # Disable Google Analytics and other prod-only tracking in dev
+  ga_analytics = ""
+
+  # You can also override other params here for dev if desired, e.g.
+  # enforceLightMode = true

@@ -1,0 +1,8 @@
+# Production-only overrides (used by `hugo` builds by default)
+
+# Keep production baseurl canonical.
+baseurl = "https://www.harlan.harris.name/"
+
+[params]
+  # Theme expects this param for GA.
+  ga_analytics = "UA-21404703-1"

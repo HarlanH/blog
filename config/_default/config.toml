@@ -1,0 +1,116 @@
+# Base Hugo configuration (shared across environments)
+# Environment-specific overrides live in:
+# - config/development/config.toml
+# - config/production/config.toml
+
+# Site title
+title = "Harlan D. Harris"
+
+theme = "hugo-clarity"
+DefaultContentLanguage = "en"
+
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
+
+# Frontmatter format
+# "yaml", "toml", "json"
+metaDataFormat = "toml"
+
+ignoreErrors = ["error-remote-getjson"]
+
+[pagination]
+  pagerSize = 10
+  path = "page"
+
+[permalinks]
+  post = "/:year/:month/:slug/"
+  code = "/:contentbasename/"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[params]
+  enforceLightMode = true
+
+  # enable search
+  enableSearch = true
+
+  numberOfTagsShown = 14
+  switchlang = false
+  enableEmoji = true
+  enableMathNotation = true
+
+  # Show a sidebar menu
+  showRightSidebar = true
+
+  # sets the maximum number of lines per codeblock. The codeblock will however be scrollable and expandable.
+  codeMaxLines = 7
+
+  # disable showing line numbers by default. Switch to `true` if you'd rather have them on.
+  codeLineNumbers = false
+
+  # Select a syntax highlight.
+  # Check the static/css/highlight directory for options.
+  highlight = "default"
+
+  # Sidebar social links.
+  github = "HarlanH"
+  bitbucket = ""
+  linkedin = "harlanharris"
+  googleplus = ""
+  facebook = ""
+  twitter = ""
+  youtube = ""
+  flattr = ""
+
+  logo = ""
+  footerLogo = "icons/copy.svg"
+
+  since = 2009
+
+  [params.author]
+    name = "Harlan Harris"
+    email = "harlan@harris.name"
+
+[[menu.main]]
+  name = "Medium"
+  url = "https://medium.com/@HarlanH"
+  weight = 4
+
+[[menu.social]]
+  name = "github"
+  type = "social"
+  weight = 4
+  url = "https://github.com/HarlanH"
+
+[[menu.social]]
+  name = "LinkedIn"
+  url = "https://www.linkedin.com/in/harlanharris/"
+  weight = 4
+
+[[menu.social]]
+  name = "stackoverflow"
+  url = "https://stackoverflow.com/users/135944/harlan"
+  weight = 4
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      hardWraps = false
+      unsafe = true
+      xhtml = false
+    [markup.goldmark.extensions]
+      typographer = false
+
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = "--"
+    lineNoStart = 1
+    lineNos = true
+    lineNumbersInTable = false
+    noClasses = false
+    tabWidth = 2

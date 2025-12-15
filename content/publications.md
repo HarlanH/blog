@@ -2,7 +2,6 @@
 title = ""
 author = "author"
 draft = false
-type = "page"
 toc = true
 showDate = false
 showShare = false

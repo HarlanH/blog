@@ -1,0 +1,10 @@
+# Development-only overrides (used by `hugo server` by default)
+
+baseurl = "http://localhost:1313/"
+
+# Silence noisy warnings when embeds can't be fetched in dev.
+ignoreLogs = ["shortcode-x-getremote"]
+
+[params]
+  # Disable analytics locally
+  ga_analytics = ""

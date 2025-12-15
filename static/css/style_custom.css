@@ -26,3 +26,27 @@ a:hover {
 .copyright {
   padding-left:200px;
 }
+
+/* Software page layout */
+.software-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.software-item {
+  background-color: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+  padding: 1.25rem;
+}
+
+.software-item h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.software-item p:last-child {
+  margin-bottom: 0;
+}

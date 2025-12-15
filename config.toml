@@ -5,8 +5,10 @@ baseurl = "https://www.harlan.harris.name/"
 #copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License"
 title = "Harlan D. Harris" # Site title
 #topline = "Somethink to Chew On"
-paginate = 10
-paginatePath = "page"
+
+[pagination]
+pagerSize = 10
+path = "page"
 theme = "hugo-clarity"
 DefaultContentLanguage = "en"
 
@@ -20,7 +22,7 @@ ignoreErrors = ["error-remote-getjson"]
 
 [permalinks]
 post = "/:year/:month/:slug/"
-code = "/:filename/"
+code = "/:contentbasename/"
 
 [taxonomies]
 tag = "tags"
@@ -83,24 +85,6 @@ footerLogo = "icons/copy.svg"
 
 since = 2009
 
-[goldmark]
-  [goldmark.renderer]
-    hardWraps = false
-    unsafe = true # change to false to disable inclusion of rawHTML and math functions
-    xhtml = false
-  [goldmark.extensions]
-    typographer = false
-  [highlight]
-    codeFences = true
-    guessSyntax = true
-    hl_Lines = "--"
-    lineNoStart = 1
-    lineNos = true # always set to true # else line numbers won't show at all! even when you toggle them on in the UI
-    lineNumbersInTable = false # toggling this on (i.e to true) or deleting this line will break the code blocks functionality. Will
-    noClasses = false
-    # style = "monokai"
-    tabWidth = 2
-    
 #[blackfriday]
 #angledQuotes = true
 #fractions = false
@@ -134,4 +118,19 @@ since = 2009
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
-      unsafe = true
+      hardWraps = false
+      unsafe = true # change to false to disable inclusion of rawHTML and math functions
+      xhtml = false
+    [markup.goldmark.extensions]
+      typographer = false
+
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = "--"
+    lineNoStart = 1
+    lineNos = true # always set to true # else line numbers won't show at all! even when you toggle them on in the UI
+    lineNumbersInTable = false # toggling this on (i.e to true) or deleting this line will break the code blocks functionality. Will
+    noClasses = false
+    # style = "monokai"
+    tabWidth = 2

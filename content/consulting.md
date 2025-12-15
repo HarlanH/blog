@@ -4,7 +4,6 @@ date = "2025-11-07T14:41:00+01:00"
 title = ""
 author = "author"
 draft = false
-type = "page"
 showDate = false
 showShare = false
 showReadTime = false
