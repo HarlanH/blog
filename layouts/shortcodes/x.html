@@ -1,0 +1,22 @@
+{{/* Custom X (Twitter) embed shortcode for older Hugo versions.
+
+Usage in content:
+  {{% x user="HarlanH" id="508680143867768832" %}}
+
+This keeps builds working on Netlify (Hugo 0.115) where the built-in
+`x` shortcode does not yet exist. It renders a simple link to the post.
+*/}}
+
+{{- $user := .Get "user" | default "" -}}
+{{- $id := .Get "id" | default "" -}}
+{{- if and $user $id -}}
+  <p>
+    <a href="https://x.com/{{ $user }}/status/{{ $id }}">
+      View this post on X ({{ $user }})
+    </a>
+  </p>
+{{- else -}}
+  {{/* Fallback if parameters are missing */}}
+  <p>[X embed: missing <code>user</code> or <code>id</code> parameter]</p>
+{{- end -}}
+
