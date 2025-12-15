@@ -14,7 +14,7 @@ This file is for AI agents (and future maintainers) working on this repository. 
 - **Netlify config**: `netlify.toml`
   - **Build command**: `hugo`
   - **Publish directory**: `public`
- - **Hugo version**: `0.152.2` (via `HUGO_VERSION` in `[build.environment]`)
+ - **Hugo version**: `0.115.0` on Netlify (via `HUGO_VERSION` in `[build.environment]`)
   - **Branch deploy / deploy previews**: use `hugo -F -b $DEPLOY_PRIME_URL`
   - **Production env**: sets `HUGO_ENV = 'production'`
 - **blogdown**:
