@@ -2,6 +2,35 @@ h2 {
   font-size: 30px;
 }
 
+/* Header styling - restore nice grey background with proper contrast */
+.nav_header {
+  background-color: #e8e8e8 !important;
+}
+
+.nav {
+  color: #333333 !important;
+}
+
+/* Make icons dark on grey header background */
+.nav_header .follow svg,
+.nav_header .follow svg use,
+.nav_header .follow .icon,
+.nav_header .follow .icon svg,
+.nav_header .follow a svg,
+.nav_header .follow a .icon svg {
+  fill: #333333 !important;
+  color: #333333 !important;
+}
+
+.nav_header .follow a {
+  color: #333333 !important;
+}
+
+/* Make color mode toggle visible on grey background */
+.nav_header .color_mode {
+  color: #333333;
+}
+
 .navbar-default .navbar-brand {
    color: rgb(0,80,200);
    font-size: 35px;
