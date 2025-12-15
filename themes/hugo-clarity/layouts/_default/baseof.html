@@ -32,7 +32,7 @@
     {{- $bundle := slice $highlight $variables $functions $code $main $custom | resources.Concat $bundlePath | resources.Fingerprint "sha512" -}}
 
     <!-- styles files (served from static/css) -->
-    <link rel="stylesheet" type="text/css" href="{{ "css/style.css" | relURL }}">
+    <link rel="stylesheet" type="text/css" href="{{ "css/styles.css" | relURL }}">
     <link rel="stylesheet" type="text/css" href="{{ "css/style_custom.css" | relURL }}">
     {{- with $s.customCSS }}
     {{- range . -}}
