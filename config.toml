@@ -22,7 +22,7 @@ ignoreErrors = ["error-remote-getjson"]
 
 [permalinks]
 post = "/:year/:month/:slug/"
-code = "/:contentbasename/"
+code = "/:filename/"
 
 [taxonomies]
 tag = "tags"
