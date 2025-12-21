@@ -26,9 +26,9 @@ I build small, donationware tools that others may find useful. This page highlig
   </div>
 
   <div class="software-item">
-    <h2>OssaPlan</h2>
+    <h2>OpTree</h2>
     <p>A small web app for building and sharing Opportunity-Solution Trees.</p>
-    <p><a href="https://ossaplan.replit.app/">Open OssaPlan</a> (current URL, subject to change).</p>
+    <p><a href="https://optree.app/">Open OpTree</a>.</p>
   </div>
 </div>
 
